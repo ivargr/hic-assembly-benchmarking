@@ -4,7 +4,7 @@ import numpy as np
 from bionumpy import bnp_open
 from bionumpy.kmers import TwoBitHash
 from npstructures import HashTable, HashSet, Counter, RaggedArray
-
+from bionumpy.kmers import fast_hash
 
 @dataclass
 class GfaKmerIndex:
@@ -17,7 +17,8 @@ class GfaKmerIndex:
         # first find all unique kmers
         hasher = TwoBitHash(k)
         kmers = np.concatenate(
-            [hasher.get_kmer_hashes(chunk.sequence).ravel() for chunk in data]
+            #[hasher.get_kmer_hashes(chunk.sequence).ravel() for chunk in data]
+            [fast_hash(chunk.sequence, k).ravel() for chunk in data]
         )
         logging.info("Counting kmers")
         unique_kmers = np.unique(kmers)
@@ -32,7 +33,8 @@ class GfaKmerIndex:
         kmer_index = HashTable(kmers_with_frequency_1, 0)
         data = bnp_open(gfa_file_name, chunk_size=10000000)
         for chunk in data:
-            kmers = hasher.get_kmer_hashes(chunk.sequence)
+            #kmers = hasher.get_kmer_hashes(chunk.sequence)
+            kmers = fast_hash(chunk.sequence, k)
             for sequence_id, sequence_kmers in enumerate(kmers):
                 kmer_index[sequence_kmers[np.where(kmer_counter[sequence_kmers] == 1)[0]]] = sequence_id
 

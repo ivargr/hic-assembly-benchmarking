@@ -9,7 +9,7 @@ setup(name='hic_phaser',
       license='MIT',
       packages=["hic_phaser"],
       zip_safe=False,
-      install_requires=['numpy', 'graph_kmer_index', 'shared_memory_wrapper'],
+      install_requires=['numpy', 'shared_memory_wrapper>=0.0.8'],
       classifiers=[
           'Programming Language :: Python :: 3'
       ],
