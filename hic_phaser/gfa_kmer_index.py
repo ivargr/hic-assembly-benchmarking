@@ -15,7 +15,7 @@ class GfaKmerIndex:
         data = bnp.open(gfa_file_name).read_chunks(chunk_size=10000000)
         # first find all unique kmers
         kmers = np.concatenate(
-            [fast_hash(bnp.as_encoded_array(chunk.sequence, encoding=bnp.DNAEncoding), k).ravel() for chunk in data]
+            [fast_hash(bnp.as_encoded_array(chunk.sequence, bnp.DNAEncoding), k).ravel() for chunk in data]
         )
         logging.info("Counting kmers")
         unique_kmers = np.unique(kmers)
@@ -31,7 +31,7 @@ class GfaKmerIndex:
         data = bnp.open(gfa_file_name).read_chunks(chunk_size=10000000)
         sequence_id = 0
         for chunk in data:
-            kmers = fast_hash(bnp.as_encoded_array(chunk.sequence, encoding=bnp.DNAEncoding), k)
+            kmers = fast_hash(bnp.as_encoded_array(chunk.sequence, bnp.DNAEncoding), k)
             for sequence_kmers in kmers:
                 print("Sequence %d has %d kmers and %d kmers with frequency 1" % (sequence_id, len(sequence_kmers), len(np.where(kmer_counter[sequence_kmers]==1)[0])))
                 kmer_index[sequence_kmers[np.where(kmer_counter[sequence_kmers] == 1)[0]]] = sequence_id

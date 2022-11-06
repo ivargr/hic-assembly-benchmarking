@@ -23,13 +23,21 @@ def index_gfa(gfa: str, out_file_name: str, k: int=31):
     logging.info("Wrote kmer index to %s" % out_file_name)
 
 
+def get_kmers(chunk, k=31):
+    # hack because problems with Ns in current version of bionumpy
+    # will be fixed in next version of bionumpy
+    sequence = chunk.sequence
+    sequence._data[sequence._data == "N"] = "A"
+    return bnp.kmers.fast_hash(bnp.as_encoded_array(sequence, bnp.DNAEncoding), k)
+
+
 @app.command()
 def map_reads(kmer_index: str, hic1: str, hic2: str, out_file_name, k: int=31, limit_to_n_reads: int=-1):
     kmer_index = from_file(kmer_index)
     read_chunks = [bnp.open(hic1).read_chunks(), bnp.open(hic2).read_chunks()]
 
     # using "fast-hash" which should be safe to use
-    kmer_chunks = [(bnp.kmers.fast_hash(bnp.as_encoded_array(chunk.sequence, bnp.DNAEncoding), k) for chunk in chunks)
+    kmer_chunks = [(get_kmers(chunk) for chunk in chunks)
                    for chunks in read_chunks]
 
     mapped_node_ids = [[], []]
