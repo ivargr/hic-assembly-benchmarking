@@ -32,11 +32,14 @@ class GfaKmerIndex:
         # make a lookup from kmer to node segment
         kmer_index = HashTable(kmers_with_frequency_1, 0)
         data = bnp_open(gfa_file_name, chunk_size=10000000)
+        sequence_id = 0
         for chunk in data:
             #kmers = hasher.get_kmer_hashes(chunk.sequence)
             kmers = fast_hash(chunk.sequence, k)
-            for sequence_id, sequence_kmers in enumerate(kmers):
+            for sequence_kmers in kmers:
+                print("Sequence %d has %d kmers and %d kmers with frequency 1" % (sequence_id, len(sequence_kmers), len(np.where(kmer_counter[sequence_kmers]==1)[0])))
                 kmer_index[sequence_kmers[np.where(kmer_counter[sequence_kmers] == 1)[0]]] = sequence_id
+                sequence_id += 1
 
         logging.info("Made hashmap from unique kmers to sequence ids")
         return cls(kmer_index, HashSet(kmers_with_frequency_1))
