@@ -1,0 +1,32 @@
+from typing import Literal
+from snakemake.utils import min_version
+min_version("6.0")
+
+configfile: "config/config.yaml"
+
+from mapping_benchmarking.config import ReferenceGenome, Individual
+from snakehelp import parameters
+
+@parameters
+class SingleHaplotypeAndChromosomeHifiReads:
+    individual: Individual
+    depth: int
+    chromosome: str
+    haplotype: Literal[0, 1]
+
+
+@parameters
+class HifiReads:
+    individual: Individual
+    dataset_size: Literal["small", "medium", "big"]
+    depth: int
+
+
+
+include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/reference_genome.smk"
+include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/read_simulation.smk"
+include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/mason.smk"
+include: "hifi_simulation.smk"
+
+
+
