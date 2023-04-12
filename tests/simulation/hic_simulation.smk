@@ -1,7 +1,5 @@
 
 
-
-
 rule simulate_hic_for_haplotype:
     input:
         reference = ReferenceGenome.path(file_ending="") + "/haplotype{haplotype}.fa",
@@ -15,7 +13,7 @@ rule simulate_hic_for_haplotype:
         tmp_output = lambda wildcards, input, output: output.reads1.replace(".fq.gz", ".tmp")
     shell:
         """
-        rm {params.abundance_profile} && 
+        rm -f {params.abundance_profile} && 
         sim3C --dist uniform -n {wildcards.n_reads} -l 150 -e NlaIII -m hic {input.reference} {params.tmp_output} && 
         seqtk seq -1 {params.tmp_output} | gzip -c > {output.reads1} && 
         seqtk seq -2 {params.tmp_output} | gzip -c > {output.reads2} 

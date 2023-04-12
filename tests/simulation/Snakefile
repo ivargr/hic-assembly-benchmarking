@@ -32,11 +32,20 @@ class HiCReads:
     #file_ending = ".fq.gz"
 
 
+@parameters
+class HifiasmResults:
+    individual: Individual
+    dataset_size: Literal["small", "medium", "big"]
+    depth: int
+    n_reads: int
+
+
 include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/reference_genome.smk"
 include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/read_simulation.smk"
 include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/mason.smk"
 include: "hifi_simulation.smk"
 include: "hic_simulation.smk"
+include: "hifiasm.smk"
 
 
 

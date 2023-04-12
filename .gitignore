@@ -19,3 +19,7 @@ logs
 *.maf
 *.id_mapping
 *egg-info*
+*.tsv
+*.log
+*.bin
+*.pbi

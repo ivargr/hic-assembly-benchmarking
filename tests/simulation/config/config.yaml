@@ -31,7 +31,6 @@ genomes:
       small:
         chromosomes: "chrIV,chrXV"
         genome_size: 2623224
-        n_chromosomes: 2
       medium:
         chromosomes: "chrI,chrII,chrIII,chrIV,chrV"
         genome_size: 3468829
