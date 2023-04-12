@@ -22,11 +22,21 @@ class HifiReads:
     depth: int
 
 
+@parameters
+class HiCReads:
+    individual: Individual
+    dataset_size: Literal["small", "medium", "big"]
+    hic: Literal["hic"]
+    n_reads: int
+    #read_pair: Literal["reads1", "reads2"]
+    #file_ending = ".fq.gz"
+
 
 include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/reference_genome.smk"
 include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/read_simulation.smk"
 include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/mason.smk"
 include: "hifi_simulation.smk"
+include: "hic_simulation.smk"
 
 
 

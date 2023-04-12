@@ -71,5 +71,17 @@ rule merge_hifi_bams:
         "envs/samtools.yml"
     shell:
         "samtools merge {output} {input}"
+        
+        
+rule converte_hifi_bam_to_fq:
+    input:
+        HifiReads.path() + ".bam"
+    output:
+        HifiReads.path() + ".fq"
+    conda:
+        "envs/bedtools.yml"
+    shell:
+        "bamToFastq -i {input} -fq {output}"
+
 
 
