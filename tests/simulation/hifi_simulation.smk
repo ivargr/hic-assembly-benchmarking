@@ -58,6 +58,8 @@ rule make_hifi:
         SingleHaplotypeAndChromosomeHifiReads.path() + "_0001.ccs.bam",
     conda:
         "envs/ccs.yml"
+    threads:
+        100  # cannot be run with other ccs commands, conflicting tmp files
     shell:
         "ccs {input} {output}"
 

@@ -46,6 +46,7 @@ include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/mason.smk"
 include: "hifi_simulation.smk"
 include: "hic_simulation.smk"
 include: "hifiasm.smk"
+include: "evaluation.smk"
 
 
 

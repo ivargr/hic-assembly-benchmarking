@@ -26,6 +26,7 @@ genomes:
 
   # yeast
   sacCer3:
+    convert_to_numeric: True  # Set to true if chromosome names should be converted to numeric names
     simulated:
       simulated: True
       small:
