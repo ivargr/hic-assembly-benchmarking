@@ -8,7 +8,7 @@ rule run_quast:
     output:
         ScaffoldingResults.path() + "_quast_report/report.tsv"
     params:
-        quast_dir=lambda wildcards, input, output: os.path.sep.join(output[0].split(os.path.sep)[:-2])
+        quast_dir=lambda wildcards, input, output: os.path.sep.join(output[0].split(os.path.sep)[:-1])
     conda:
         "envs/quast.yml"
     shell:

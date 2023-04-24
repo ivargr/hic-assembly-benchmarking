@@ -19,3 +19,10 @@ rule test_yahs:
         ScaffoldingResults.from_flat_params(scaffolder="yahs").file_path() + "_scaffolds_final.fa"
     output:
         touch("test_yahs")
+
+
+rule test_quast:
+    input:
+        ScaffoldingResults.from_flat_params(scaffolder="yahs").file_path() + "_quast_report/report.tsv"
+    output:
+        touch("test_quast")

@@ -7,7 +7,7 @@ rule run_hifiasm_with_hic_reads:
         hifi = HifiReads.path() + ".fq"
 
     output:
-        multiext(HifiasmResults.path() + "/hifiasm", ".hic.hap1.p_ctg.gfa", ".hic.hap2.p_ctg.gfa")
+        multiext(HifiasmResults.path() + "/hifiasm", ".hic.hap1.p_ctg.gfa", ".hic.hap2.p_ctg.gfa", ".hic.p_ctg.gfa")
     params:
         out_base_name = lambda wildcards, input, output: os.path.sep.join(output[0].split(os.path.sep)[:-1]) + "/hifiasm"
     conda:
