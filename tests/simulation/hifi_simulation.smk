@@ -59,7 +59,7 @@ rule make_hifi:
     conda:
         "envs/ccs.yml"
     threads:
-        100  # cannot be run with other ccs commands, conflicting tmp files
+        100  # hack to avoid running with other ccs commands, conflicting tmp files
     shell:
         "ccs {input} {output}"
 
@@ -75,7 +75,7 @@ rule merge_hifi_bams:
         "samtools merge {output} {input}"
         
         
-rule converte_hifi_bam_to_fq:
+rule convert_hifi_bam_to_fq:
     input:
         HifiReads.path() + ".bam"
     output:

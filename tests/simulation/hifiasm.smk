@@ -1,6 +1,5 @@
 import os
 
-
 rule run_hifiasm_with_hic_reads:
     input:
         hic1 = HiCReads.path() + "/reads1.fq.gz",
@@ -45,7 +44,7 @@ rule dipcall:
         prefix = lambda wildcards, input, output: os.path.sep.join(output[0].split(os.path.sep)[:-1])
     shell:
         """
-        run-dipcall -a {params.prefix}/dipcall {input.reference} {input.hap1} {input.hap2} > {output}  && 
+        dipcall.kit/run-dipcall -a {params.prefix}/dipcall {input.reference} {input.hap1} {input.hap2} > {output}  && 
         make --always-make -j2 -f {output}
         """
 

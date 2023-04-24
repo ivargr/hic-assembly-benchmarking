@@ -4,8 +4,18 @@ min_version("6.0")
 
 configfile: "config/config.yaml"
 
-from mapping_benchmarking.config import ReferenceGenome, Individual
 from snakehelp import parameters
+
+
+@parameters
+class GenomeBuild:
+    genome_build: str = "sacCer3"
+
+@parameters
+class Individual:
+    genome_build: GenomeBuild
+    individual: str = "simulated"
+
 
 @parameters
 class SingleHaplotypeAndChromosomeHifiReads:
@@ -27,9 +37,7 @@ class HiCReads:
     individual: Individual
     dataset_size: Literal["small", "medium", "big"]
     hic: Literal["hic"]
-    n_reads: int
-    #read_pair: Literal["reads1", "reads2"]
-    #file_ending = ".fq.gz"
+    n_reads: int = 100
 
 
 @parameters
@@ -40,13 +48,21 @@ class HifiasmResults:
     n_reads: int
 
 
-include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/reference_genome.smk"
-include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/read_simulation.smk"
-include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/mason.smk"
+@parameters
+class ScaffoldingResults:
+    assembly_graph: HifiasmResults
+    scaffolder: Literal["yahs", "custom"]
+
+
+
+include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")
+include: github("bioinf-benchmarking/mapping-benchmarking", "rules/read_simulation.smk", branch="master")
+include: github("bioinf-benchmarking/mapping-benchmarking", "rules/mason.smk", branch="master")
 include: "hifi_simulation.smk"
 include: "hic_simulation.smk"
 include: "hifiasm.smk"
 include: "evaluation.smk"
+include: "tests.smk"
 
 
 
