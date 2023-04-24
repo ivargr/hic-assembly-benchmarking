@@ -1,4 +1,3 @@
-from mapping_benchmarking.config import ReferenceGenome, Individual
 from itertools import product
 
 
