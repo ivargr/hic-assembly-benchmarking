@@ -22,10 +22,10 @@ jobs:
           directory: '.'
           snakefile: 'Snakefile'
           args: '-F --cores 4 --use-conda test.txt'
-          stagein: | 
-            cd tests/simulation
+          stagein: |
             python -m pip install --upgrade pip setuptools wheel
             pip install .
+            cd tests/simulation
 
       - name: Save results
         run: |
