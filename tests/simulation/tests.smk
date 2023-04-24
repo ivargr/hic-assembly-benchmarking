@@ -1,7 +1,7 @@
 
 
 
-rule tests:
+rule test_hifiasm:
     input:
         HifiasmResults.from_flat_params(
             genome_build="sacCer3",
@@ -11,4 +11,11 @@ rule tests:
             n_reads=100
         ).file_path() + "/whatshap.tsv"
     output:
-        touch("test")
+        touch("test_hifiasm")
+
+
+rule test_yahs:
+    input:
+        ScaffoldingResults.from_flat_params(scaffolder="yahs").file_path() + "_scaffolds_final.fa"
+    output:
+        touch("test_yahs")

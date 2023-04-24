@@ -29,23 +29,23 @@ class SingleHaplotypeAndChromosomeHifiReads:
 class HifiReads:
     individual: Individual
     dataset_size: Literal["small", "medium", "big"]
-    depth: int
+    depth: int = 5
 
 
 @parameters
 class HiCReads:
     individual: Individual
-    dataset_size: Literal["small", "medium", "big"]
-    hic: Literal["hic"]
+    dataset_size: Literal["small", "medium", "big"] = "small"
+    hic: Literal["hic"] = "hic"
     n_reads: int = 100
 
 
 @parameters
 class HifiasmResults:
     individual: Individual
-    dataset_size: Literal["small", "medium", "big"]
-    depth: int
-    n_reads: int
+    dataset_size: Literal["small", "medium", "big"] = "small"
+    depth: int = 5
+    n_reads: int = 500
 
 
 @parameters
@@ -60,7 +60,10 @@ include: github("bioinf-benchmarking/mapping-benchmarking", "rules/read_simulati
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/mason.smk", branch="master")
 include: "hifi_simulation.smk"
 include: "hic_simulation.smk"
+include: "hic_mapping.smk"
 include: "hifiasm.smk"
+include: "yahs.smk"
+include: "quast.smk"
 include: "evaluation.smk"
 include: "tests.smk"
 

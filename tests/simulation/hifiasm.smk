@@ -17,6 +17,8 @@ rule run_hifiasm_with_hic_reads:
 
 
 
+
+
 rule get_hifiasm_haplotypes_as_fasta:
     input:
         "{file}.p_ctg.gfa"
