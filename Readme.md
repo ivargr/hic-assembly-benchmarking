@@ -1,66 +1,27 @@
 
-# HicPhaser
 
-## Installation
+## Snakemake pipeline for testing HiC phasing and scaffolding on simulated data
 
-1. Install BioNumpy by cloning the latest version of BioNumpy
-2. Install hic_phaser:
+Overview:
 
-```bash
-git clone https://github.com/ivargr/hicphaser.git
-cd hicphaser
-python3 -m pip install -e .
+* This pipeline can simulate a diploid individual with snps, indels and optinally structural variation on a reference genome of choice. Specify the individual in `config/config.yaml`. 
+* Hifi + HiC reads can be simulated from this genome
+* Hifiasm is run using the simulated reads
+* Yahs and other tools can be run to scaffold the assembly graph created by Hifiasm
+* The resulting assembly is evaluated by Quast
+
+
+### Installation
+
+1. Clone this repo. 
+2. Install Python requirements: `pip install -r requirements.txt`
+3. Test that the pipeline works: `snakemake --use-conda -F test` (should finish without errors in ~2 minutes)
+
+
+### Run scaffolding with yahs and quality assesment with quast
+
+See the rule `test_quast` in `rules/test.smk`. 
+
+```snakemake
+snakemake --use-conda -F test_quast
 ```
-
-
-## How to use
-Typical work-flow:
-
-### Step 1: Index kmers in a GFA
-This step creates a lookup (in practice a [HashTable](https://github.com/knutdrand/npstructures)) from
-unique kmers to the ID of the node that this kmer is found in. Nodes represent segments in the GFA, and are given numeric
-ids from 0 to the number of segments (based on the order).
-
-The GFA (for now, because of lack of full GFA-support in bionumpy) needs to contain only segments, so start by making a new GFA
-with only segments:
-
-```bash
-grep "^S" my.gfa > only_segments.gfa
-```
-
-Then create the index:
-```bash
-hicphaser index-gfa --k 31 only_segments.gfa index
-```
-
-An index.npz file should be created after reunning the above
-
-
-### Step 2: Map HiC-read kmers to this index
-For every read, kmers are extracted, and reads with kmers are assigned a node ID based on where the kmers match
-(a read may have kmers matching multiple nodes, this is ignored for now and only one node is chosen for simplicity).
-
-```bash
-hicphaser map-reads --limit-to-n-reads 500000 index hic_1.fastq.gz hic_2.fastq.gz mapping
-```
-
-Set `--limit-to-n-reads` to -1 to map all reads (a number other than -1 is useful only for testing/debugging to make things faster).
-
-A file `mapping.npz` is created. This file contains two numpy arrays, one for each HiC input read set. In each array, the position represents the read ID and the value at that position is the node that the read "mapped" to.
-
-
-### Step 3: Make a link-matrix
-Given the two arrays from the previous step, we can count how many times two nodes in the graph are "linked" by a read, i.e. how often a pair of reads maps to the two nodes.
-
-```bash
-hicphaser get-link-counts mapping link_counts
-```
-
-We now have a matrix representing the link counts, which can be analyzed further:
-
-```python
-from shared_memory_wrapper import from_file
-counts = from_file("link_counts")
-print(counts)
-```
-
