@@ -24,7 +24,7 @@ jobs:
           args: '-F --cores 1 --use-conda test_quast'
           stagein: |
             apt-get update
-            apt-get -y install gcc
+            apt-get -y install gcc c++
             ./install_pbsim.sh
             python -m pip install --upgrade pip setuptools wheel
             pip install -r requirements.txt
