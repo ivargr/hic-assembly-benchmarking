@@ -25,3 +25,8 @@ See the rule `test_quast` in `rules/test.smk`.
 ```snakemake
 snakemake --use-conda -F test_quast
 ```
+
+
+### Missing functionality / todo
+* Genome simulation is hardcoded in config and the same for all simulations. Should be possible to configure for a given run
+* Heterozygosity is fixed, should be tunable. Every variant is now default heterozygous. 
