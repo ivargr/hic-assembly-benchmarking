@@ -26,3 +26,10 @@ rule test_quast:
         ScaffoldingResults.from_flat_params(scaffolder="yahs", depth=1).file_path() + "_quast_report/report.tsv"
     output:
         touch("test_quast")
+
+
+rule test_pbsim:
+    input:
+        SingleHaplotypeAndChromosomeHifiReads.from_flat_params().file_path() + "_0001.sam",
+    output:
+        touch("test_pbsim")

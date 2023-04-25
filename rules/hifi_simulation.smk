@@ -27,9 +27,14 @@ rule simulate_ccr_reads:
         SingleHaplotypeAndChromosomeHifiReads.path() + "_0001.sam",
     params:
         prefix = lambda wildcards, input, output: output[0].replace("_0001.sam", "")
+    #conda:
+    #    "../envs/pbsim.yml"
     shell:
         """
-        ./pbsim --strategy wgs --method qshmm --qshmm QSHMM-RSII.model \
+        pbsim \
+        --strategy wgs \
+        --method qshmm \
+        --qshmm QSHMM-RSII.model \
         --difference-ratio 22:45:33 \
         --length-mean 15000 \
         --depth {wildcards.depth} \

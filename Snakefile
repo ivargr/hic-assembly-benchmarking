@@ -20,9 +20,9 @@ class Individual:
 @parameters
 class SingleHaplotypeAndChromosomeHifiReads:
     individual: Individual
-    depth: int
-    chromosome: str
-    haplotype: Literal[0, 1]
+    depth: int = 1
+    chromosome: str = "chrIV"
+    haplotype: Literal[0, 1] = 0
 
 
 @parameters
