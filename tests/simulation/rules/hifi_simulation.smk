@@ -14,7 +14,7 @@ rule chromosome_reference:
     output:
         "{path}/{ref}/only_chromosome_{chromosome}.fa"
     conda:
-        "envs/samtools.yml"
+        "../envs/samtools.yml"
     shell:
         "samtools faidx {input} {wildcards.chromosome} > {output}"
 
@@ -45,7 +45,7 @@ rule sam_to_bam:
     output:
         "{file}_0001.bam"
     conda:
-        "envs/samtools.yml"
+        "../envs/samtools.yml"
     shell:
         "samtools view {input} -o {output}"
 
@@ -56,7 +56,7 @@ rule make_hifi:
     output:
         SingleHaplotypeAndChromosomeHifiReads.path() + "_0001.ccs.bam",
     conda:
-        "envs/ccs.yml"
+        "../envs/ccs.yml"
     threads:
         100  # hack to avoid running with other ccs commands, conflicting tmp files
     shell:
@@ -69,7 +69,7 @@ rule merge_hifi_bams:
     output:
         HifiReads.path() + ".bam"
     conda:
-        "envs/samtools.yml"
+        "../envs/samtools.yml"
     shell:
         "samtools merge {output} {input}"
         
@@ -80,7 +80,7 @@ rule convert_hifi_bam_to_fq:
     output:
         HifiReads.path() + ".fq"
     conda:
-        "envs/bedtools.yml"
+        "../envs/bedtools.yml"
     shell:
         "bamToFastq -i {input} -fq {output}"
 

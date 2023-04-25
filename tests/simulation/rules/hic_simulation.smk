@@ -7,7 +7,7 @@ rule simulate_hic_for_haplotype:
         reads1 = HiCReads.path() + "/haplotype_{haplotype}_1.fq.gz",
         reads2= HiCReads.path() + "/haplotype_{haplotype}_2.fq.gz",
     conda:
-        "envs/sim3c.yml"
+        "../envs/sim3c.yml"
     params:
         abundance_profile = lambda wildcards, input, output: "/".join(output.reads1.split("/")[:-1]) + "/profile.tsv",
         tmp_output = lambda wildcards, input, output: output.reads1.replace(".fq.gz", ".tmp")

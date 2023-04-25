@@ -10,7 +10,7 @@ rule run_quast:
     params:
         quast_dir=lambda wildcards, input, output: os.path.sep.join(output[0].split(os.path.sep)[:-1])
     conda:
-        "envs/quast.yml"
+        "../envs/quast.yml"
     shell:
         """
         quast {input.assembly} -r {input.true_reference} -o {params.quast_dir}

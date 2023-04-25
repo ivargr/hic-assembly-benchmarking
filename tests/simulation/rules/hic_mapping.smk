@@ -8,7 +8,7 @@ rule map_hic:
     output:
         HifiasmResults.path() + "/hic.bam"
     conda:
-        "envs/hic_mapping.yml"
+        "../envs/hic_mapping.yml"
     params:
         out_dir=lambda wildcards, input, output: output[0].replace("hic.bam", "")
     shell:

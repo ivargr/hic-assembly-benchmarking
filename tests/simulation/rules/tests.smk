@@ -23,6 +23,6 @@ rule test_yahs:
 
 rule test_quast:
     input:
-        ScaffoldingResults.from_flat_params(scaffolder="yahs").file_path() + "_quast_report/report.tsv"
+        ScaffoldingResults.from_flat_params(scaffolder="yahs", depth=1).file_path() + "_quast_report/report.tsv"
     output:
         touch("test_quast")

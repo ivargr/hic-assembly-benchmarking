@@ -7,7 +7,7 @@ rule run_yahs:
     output:
         ScaffoldingResults.path(scaffolder="yahs") + "_scaffolds_final.fa"
     conda:
-        "envs/yahs.yml"
+        "../envs/yahs.yml"
     params:
         out_prefix = lambda wildcards, input, output: output[0].replace("_scaffolds_final.fa", "")
     shell:

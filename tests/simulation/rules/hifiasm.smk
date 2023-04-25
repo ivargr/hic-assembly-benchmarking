@@ -11,7 +11,7 @@ rule run_hifiasm_with_hic_reads:
     params:
         out_base_name = lambda wildcards, input, output: os.path.sep.join(output[0].split(os.path.sep)[:-1]) + "/hifiasm"
     conda:
-        "envs/hifiasm.yml"
+        "../envs/hifiasm.yml"
     shell:
         "hifiasm -o {params.out_base_name} -t6 --h1 {input.hic1} --h2 {input.hic2} {input.hifi}"
 
@@ -25,7 +25,7 @@ rule get_hifiasm_haplotypes_as_fasta:
     output:
         "{file}.p_ctg.fa"
     conda:
-        "envs/gfatools.yml"
+        "../envs/gfatools.yml"
     shell:
         """
         gfatools gfa2fa {input} > {output}
@@ -57,7 +57,7 @@ rule reaheader_dipcall_vcf:
     output:
         HifiasmResults.path() + "/dipcall.dip.cleaned.vcf.gz"
     conda:
-        "envs/bcftools.yml"
+        "../envs/bcftools.yml"
     shell:
         "echo '{wildcards.individual}\n' > {wildcards.individual}.txt && "
         "bcftools reheader --samples {wildcards.individual}.txt {input}  > {output}"
@@ -72,7 +72,7 @@ rule get_variants_for_dataset:
     params:
         chromosomes = lambda wildcards: config["genomes"][wildcards.genome_build][wildcards.individual][wildcards.dataset_size]["chromosomes"]
     conda:
-        "envs/bcftools.yml"
+        "../envs/bcftools.yml"
     shell:
         """
         bcftools view --regions {params.chromosomes} -O z {input.variants} > {output}

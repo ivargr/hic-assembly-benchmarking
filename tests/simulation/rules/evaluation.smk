@@ -7,7 +7,7 @@ rule run_whatshap:
     output:
         HifiasmResults.path() + "/whatshap.tsv"
     conda:
-        "envs/whatshap.yml"
+        "../envs/whatshap.yml"
     shell:
         """
         whatshap compare --names truth,sample --tsv-pairwise {output} {input} 
