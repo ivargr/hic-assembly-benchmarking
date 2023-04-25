@@ -16,6 +16,12 @@ jobs:
         with:
           python-version: "3.10"
 
+      - name: Install stuff
+        run: |
+            apt-get update
+            apt-get -y install gcc
+            ./install_pbsim.sh
+
       - name: Run test
         uses: snakemake/snakemake-github-action@v1
         with:
@@ -24,8 +30,7 @@ jobs:
           args: '-F --cores 1 --use-conda test_quast'
           stagein: |
             apt-get update
-            apt-get -y install gcc c++
-            ./install_pbsim.sh
+            apt-get -y install gcc
             python -m pip install --upgrade pip setuptools wheel
             pip install -r requirements.txt
 
