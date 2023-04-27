@@ -38,12 +38,12 @@ genomes:
 
 
 mason_variator_parameters:
-   "--snp-rate 0.001
-   --small-indel-rate 0.0001
-   --min-small-indel-size 1
-   --max-small-indel-size 6
-   --sv-indel-rate 0
+   "--snp-rate 0.002
+   --small-indel-rate 0.0005
+   --min-small-indel-size 2
+   --max-small-indel-size 25
+   --sv-indel-rate 0.00001
    --sv-inversion-rate 0
    --sv-translocation-rate 0
-   --sv-duplication-rate 0
+   --sv-duplication-rate 0.00001
    "

@@ -15,3 +15,19 @@ rule map_hic:
         """
         arima_hic_mapping_pipeline/01_mapping_arima.sh {input} {params.out_dir}
         """
+
+
+
+rule sort_hic_mapped_reads_by_name:
+    input:
+        HifiasmResults.path() + "/hic.bam"
+    output:
+        HifiasmResults.path() + "/hic.sorted_by_read_name.bam"
+    conda:
+        "../envs/samtools.yml"
+    shell:
+        """
+        samtools sort -n {input} -o {output}
+        """
+
+

@@ -51,8 +51,12 @@ class HifiasmResults:
 @parameters
 class ScaffoldingResults:
     assembly_graph: HifiasmResults
-    scaffolder: Literal["yahs", "custom"]
+    scaffolder: Literal["yahs", "custom", "bnp_scaffolding"]
 
+@parameters
+class PhasingResults:
+    assembly_graph: HifiasmResults
+    phaser: Literal["gfase"]
 
 
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")
@@ -63,6 +67,8 @@ include: "rules/hic_simulation.smk"
 include: "rules/hic_mapping.smk"
 include: "rules/hifiasm.smk"
 include: "rules/yahs.smk"
+include: "rules/gfase.smk"
+include: "rules/bnp_scaffolding.smk"
 include: "rules/quast.smk"
 include: "rules/evaluation.smk"
 include: "rules/tests.smk"
