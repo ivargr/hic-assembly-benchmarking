@@ -23,15 +23,15 @@ rule test_yahs:
 
 rule test_bnp_scaffolding:
     input:
-        ScaffoldingResults.from_flat_params(scaffolder="bnp_scaffolding", depth=1, n_reads=50000).file_path() + "_scaffolds_final.fa"
+        ScaffoldingResults.from_flat_params(scaffolder="bnp_scaffolding", depth=2, n_reads=50000).file_path() + "_scaffolds_final.fa"
     output:
         touch("test_bnp_scaffolding")
 
 
 rule test_quast:
     input:
-        ScaffoldingResults.from_flat_params(scaffolder="yahs", depth=1, n_reads=500).file_path() + "_quast_report/report.tsv",
-        ScaffoldingResults.from_flat_params(scaffolder="bnp_scaffolding", depth=1, n_reads=500).file_path() + "_quast_report/report.tsv"
+        ScaffoldingResults.from_flat_params(scaffolder="yahs", depth=2, n_reads=50000).file_path() + "_quast_report/report.tsv",
+        ScaffoldingResults.from_flat_params(scaffolder="bnp_scaffolding", depth=2, n_reads=50000).file_path() + "_quast_report/report.tsv"
     output:
         touch("test_quast")
 
@@ -41,3 +41,5 @@ rule test_pbsim:
         SingleHaplotypeAndChromosomeHifiReads.from_flat_params().file_path() + "_0001.sam",
     output:
         touch("test_pbsim")
+
+

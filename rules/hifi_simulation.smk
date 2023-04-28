@@ -63,9 +63,9 @@ rule make_hifi:
     conda:
         "../envs/ccs.yml"
     threads:
-        100  # hack to avoid running with other ccs commands, conflicting tmp files
+        10000  # hack to avoid running with other ccs commands, conflicting tmp files
     shell:
-        "ccs {input} {output}"
+        "ccs -j {config[n_threads]} {input} {output}"
 
 
 rule merge_hifi_bams:
