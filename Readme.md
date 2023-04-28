@@ -16,7 +16,7 @@ Overview:
 1. Clone this repo. 
 2. You unfortunately need to manually install pbsim3. This can be done by running `./install_pbsim.sh`. GFAse also needs to be installed manually (but this tool is not used by the main pipeline).
 2. Install Python requirements: `pip install -r requirements.txt`
-3. Test that the pipeline works: `snakemake --use-conda -F test` (should finish without errors in ~2 minutes)
+3. Test that the pipeline works: `snakemake --use-conda -F test_hifiasm` (should finish without errors in ~2 minutes)
 
 
 ### Run scaffolding with yahs and quality assesment with quast
