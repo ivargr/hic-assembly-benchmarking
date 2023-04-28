@@ -4,7 +4,7 @@ rule map_hic:
     input:
         reads1=HiCReads.path() + "/reads1.fq.gz",
         reads2=HiCReads.path() + "/reads2.fq.gz",
-        primary_assembly=HifiasmResults.path() + "/hifiasm.hic.p_ctg.fa"
+        primary_assembly=HifiasmResults.path() + "/hifiasm.hic.p_utg.fa"
     output:
         HifiasmResults.path() + "/hic.bam"
     conda:

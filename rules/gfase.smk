@@ -6,7 +6,7 @@ rule run_gfase:
         unitig_graph=HifiasmResults.path() + "/hifiasm.hic.p_utg.gfa",
         sorted_hic_reads=HifiasmResults.path() + "/hic.sorted_by_read_name.bam"
     output:
-        PhasingResults.path(phaser="gfase") + "/phased.fa"
+        multiext(PhasingResults.path(phaser="gfase") + "/", "phase_0.fasta", "phase_1.fasta")
     params:
         out_dir=lambda wildcards, input, output: os.path.sep.join(output[0].split(os.path.sep)[:-1])
     shell:
