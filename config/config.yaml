@@ -42,8 +42,8 @@ mason_variator_parameters:
    --small-indel-rate 0.0005
    --min-small-indel-size 2
    --max-small-indel-size 25
-   --sv-indel-rate 0.00001
+   --sv-indel-rate 0
    --sv-inversion-rate 0
    --sv-translocation-rate 0
-   --sv-duplication-rate 0.00001
+   --sv-duplication-rate 0
    "

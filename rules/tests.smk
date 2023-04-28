@@ -23,7 +23,7 @@ rule test_yahs:
 
 rule test_bnp_scaffolding:
     input:
-        ScaffoldingResults.from_flat_params(scaffolder="bnp_scaffolding", depth=1, n_reads=500).file_path() + "_scaffolds_final.fa"
+        ScaffoldingResults.from_flat_params(scaffolder="bnp_scaffolding", depth=1, n_reads=50000).file_path() + "_scaffolds_final.fa"
     output:
         touch("test_bnp_scaffolding")
 
