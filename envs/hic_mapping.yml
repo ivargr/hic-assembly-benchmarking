@@ -4,4 +4,3 @@ channels:
 dependencies:
   - bwa=0.7.17
   - samtools
-  - picard=2.27.5
