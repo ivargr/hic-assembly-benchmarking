@@ -13,7 +13,10 @@ rule map_hic:
         out_dir=lambda wildcards, input, output: output[0].replace(wildcards.graph + ".bam", "")
     shell:
         """
-        arima_hic_mapping_pipeline/01_mapping_arima.sh {input} {params.out_dir} {wildcards.graph}
+	bwa mem -t {config[n_threads]} -5SPM {input.primary_assembly} \
+	{input.reads1} {input.reads2} \
+	|samtools view -buS - |samtools sort -n -O bam - \
+	|samtools fixmate -mr - -|samtools sort -O bam - |samtools markdup -rsS - {output}
         """
 
 
