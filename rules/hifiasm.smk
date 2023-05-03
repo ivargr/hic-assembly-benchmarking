@@ -16,7 +16,32 @@ rule run_hifiasm_with_hic_reads:
         "hifiasm -o {params.out_base_name} -t6 --h1 {input.hic1} --h2 {input.hic2} {input.hifi}"
 
 
-
+rule filter_hic_reads:
+    input:
+        hic1 = HiCReads.path() + "/reads1.fq.gz",
+        hic2 = HiCReads.path() + "/reads2.fq.gz",
+        hap1 = HifiasmResults.path() + "/hifiasm.hic.hap1.p_ctg.fa",
+        hap2 = HifiasmResults.path() + "/hifiasm.hic.hap2.p_ctg.fa"
+    output:
+        hic1_unique1 = HiCReads.path() + "/reads1.hap1.fq.gz",
+        hic2_unique1 = HiCReads.path() + "/reads2.hap1.fq.gz",
+        hic1_unique2 = HiCReads.path() + "/reads1.hap2.fq.gz",
+        hic2_unique2 = HiCReads.path() + "/reads2.hap2.fq.gz",
+        meryl1 = HifiasmResults.path() + "/hap1.meryl",
+        meryl2 = HifiasmResults.path() + "/hap2.meryl",
+        unique1 = HifiasmResults.path() + "/unique1.meryl",
+        unique2 = HifiasmResults.path() + "/unique2.meryl"
+    conda:
+        "../envs/meryl.yml"
+    shell:
+        """
+        meryl k=31 threads={config[n_threads]} memory=4g  count output {output.meryl1} {input.hap1} &&
+        meryl k=31 threads={config[n_threads]} memory=4g  count output {output.meryl2} {input.hap2} &&
+        meryl difference {output.meryl1} {output.meryl2} output {output.unique1} && 
+        meryl difference {output.meryl2} {output.meryl1} output {output.unique2} && 
+        meryl-lookup -exclude -sequence {input.hic1} {input.hic2} -mers {output.unique1} -output {output.hic1_unique1}  {output.hic2_unique1} &&
+        meryl-lookup -exclude -sequence {input.hic1} {input.hic2} -mers {output.unique2} -output {output.hic1_unique2}  {output.hic2_unique2}
+        """
 
 
 rule get_hifiasm_haplotypes_as_fasta:
