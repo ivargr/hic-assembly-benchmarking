@@ -1,10 +1,20 @@
+rule bwa_index:
+    input:
+        "{genome}.fa",
+    output:
+        idx=multiext("{genome}.fa", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+    params:
+        algorithm="bwtsw",
+    wrapper:
+        "v1.21.2/bio/bwa/index"
 
 
 rule map_hic:
     input:
         reads1=HiCReads.path() + "/reads1.fq.gz",
         reads2=HiCReads.path() + "/reads2.fq.gz",
-        primary_assembly=HifiasmResults.path() + "/hifiasm.hic.{graph}.fa"
+        primary_assembly=HifiasmResults.path() + "/hifiasm.hic.{graph}.fa",
+        bwa_index = multiext(HifiasmResults.path() + "/hifiasm.hic.{graph}", ".fa.amb",".fa.ann",".fa.bwt",".fa.pac",".fa.sa")
     output:
         HifiasmResults.path() + "/{graph}.bam"
     conda:

@@ -46,6 +46,6 @@ rule test_pbsim:
 
 rule test_gfase:
     input:
-        multiext(PhasingResults.from_flat_params(phaser="gfase", depth=2, n_reads=5000000).file_path() + "/", "phase_0.fasta", "phase_1.fasta")
+        multiext(PhasingResults.from_flat_params(phaser="gfase", depth=2, n_reads=500000).file_path() + "/", "phase_0.fasta", "phase_1.fasta")
     output:
         "test_gfase"
