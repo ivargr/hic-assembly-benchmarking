@@ -30,10 +30,19 @@ rule test_bnp_scaffolding:
 
 rule test_quast:
     input:
-        ScaffoldingResults.from_flat_params(scaffolder="yahs", depth=2, n_reads=50000).file_path() + "_quast_report/report.tsv",
-        ScaffoldingResults.from_flat_params(scaffolder="bnp_scaffolding", depth=2, n_reads=50000).file_path() + "_quast_report/report.tsv"
+        [ScaffoldingResults.from_flat_params(dataset_size="medium", scaffolder=scaffolder, depth=1.5, n_reads=10000, extra_splits=8).file_path() + "_quast_report/report.tsv"
+        for scaffolder in ["yahs", "bnp_scaffolding"]]
     output:
         touch("test_quast")
+
+
+rule test_edison:
+    input:
+        [ScaffoldingResults.from_flat_params(dataset_size="medium", scaffolder=scaffolder, depth=1.5, n_reads=100000, extra_splits=8).file_path() + ".edison.txt"
+        for scaffolder in ["yahs", "bnp_scaffolding"]]
+    output:
+        touch("test_edison")
+
 
 
 rule test_pbsim:

@@ -13,29 +13,31 @@ rule map_hic:
     input:
         reads1=HiCReads.path() + "/reads1.fq.gz",
         reads2=HiCReads.path() + "/reads2.fq.gz",
-        primary_assembly=HifiasmResults.path() + "/hifiasm.hic.{graph}.fa",
-        bwa_index = multiext(HifiasmResults.path() + "/hifiasm.hic.{graph}", ".fa.amb",".fa.ann",".fa.bwt",".fa.pac",".fa.sa")
+        primary_assembly=HifiasmResultsWithExtraSplits.path() + "/{assembly}.fa",
+        #bwa_index = multiext(HifiasmResultsWithExtraSplits.path() + "/{assembly}", ".fa.amb",".fa.ann",".fa.bwt",".fa.pac",".fa.sa")
     output:
-        HifiasmResults.path() + "/{graph}.bam"
+        HifiasmResultsWithExtraSplits.path() + "/{assembly}.bam"
     conda:
-        "../envs/hic_mapping.yml"
+        #"../envs/hic_mapping.yml"
+        "../envs/picard.yml"
     params:
-        out_dir=lambda wildcards, input, output: output[0].replace(wildcards.graph + ".bam", "")
+        out_dir=lambda wildcards, input, output: output[0].replace(wildcards.assembly + ".bam", "")
     shell:
         """
-	bwa mem -t {config[n_threads]} -5SPM {input.primary_assembly} \
-	{input.reads1} {input.reads2} \
-	|samtools view -buS - |samtools sort -n -O bam - \
-	|samtools fixmate -mr - -|samtools sort -O bam - |samtools markdup -rsS - {output}
-        """
+    arima_hic_mapping_pipeline/01_mapping_arima.sh {input.reads1} {input.reads2} {input.primary_assembly} {params.out_dir} {wildcards.assembly}
+	#bwa mem -t {config[n_threads]} -5SPM {input.primary_assembly} \
+	#{input.reads1} {input.reads2} \
+	#| samtools view -buS - | samtools sort -n -O bam - \
+	#| samtools fixmate -mr - -| samtools sort -O bam - | samtools markdup -rsS - {output}
+        #"""
 
 
 
 rule sort_hic_mapped_reads_by_name:
     input:
-        HifiasmResults.path() + "/{name,\w+}.bam"
+        "{file}.bam"
     output:
-        HifiasmResults.path() + "/{name,\w+}.sorted_by_read_name.bam"
+        "{file}.sorted_by_read_name.bam"
     conda:
         "../envs/samtools.yml"
     shell:

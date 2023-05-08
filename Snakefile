@@ -20,7 +20,7 @@ class Individual:
 @parameters
 class SingleHaplotypeAndChromosomeHifiReads:
     individual: Individual
-    depth: int = 1
+    depth: float = 1.0
     chromosome: str = "chrIV"
     haplotype: Literal[0, 1] = 0
 
@@ -29,7 +29,7 @@ class SingleHaplotypeAndChromosomeHifiReads:
 class HifiReads:
     individual: Individual
     dataset_size: Literal["small", "medium", "big"]
-    depth: int = 5
+    depth: float = 5.0
 
 
 @parameters
@@ -44,19 +44,26 @@ class HiCReads:
 class HifiasmResults:
     individual: Individual
     dataset_size: Literal["small", "medium", "big"] = "small"
-    depth: int = 5
+    depth: float = 5.0
     n_reads: int = 500
 
 
 @parameters
+class HifiasmResultsWithExtraSplits:
+    hifiasm_results: HifiasmResults
+    extra_splits: int = 0
+
+
+@parameters
 class ScaffoldingResults:
-    assembly_graph: HifiasmResults
+    assembly_graph: HifiasmResultsWithExtraSplits
     scaffolder: Literal["yahs", "custom", "bnp_scaffolding"]
 
 @parameters
 class PhasingResults:
-    assembly_graph: HifiasmResults
+    assembly_graph: HifiasmResultsWithExtraSplits
     phaser: Literal["gfase"]
+
 
 
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")

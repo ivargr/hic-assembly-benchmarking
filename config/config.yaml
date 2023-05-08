@@ -31,9 +31,12 @@ genomes:
     simulated:
       simulated: True
       small:
-        chromosomes: "chrIV,chrXV"
-        genome_size: 2623224
+          chromosomes: "chrI"
+          genome_size: 230218
       medium:
+        chromosomes: "chrI,chrII,chrIII"
+        #genome_size: 2623224
+      big:
         chromosomes: "chrI,chrII,chrIII,chrIV,chrV"
         genome_size: 3468829
 
