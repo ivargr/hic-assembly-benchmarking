@@ -3,8 +3,9 @@ from snakemake.utils import min_version
 min_version("6.0")
 
 configfile: "config/config.yaml"
+configfile: "config/plots.yaml"
 
-from snakehelp import parameters
+from snakehelp import parameters, result
 
 
 @parameters
@@ -29,7 +30,7 @@ class SingleHaplotypeAndChromosomeHifiReads:
 class HifiReads:
     individual: Individual
     dataset_size: Literal["small", "medium", "big"]
-    depth: float = 5.0
+    depth: float = 10
 
 
 @parameters
@@ -44,20 +45,27 @@ class HiCReads:
 class HifiasmResults:
     individual: Individual
     dataset_size: Literal["small", "medium", "big"] = "small"
-    depth: float = 5.0
+    depth: float = 10
     n_reads: int = 500
 
 
 @parameters
 class HifiasmResultsWithExtraSplits:
     hifiasm_results: HifiasmResults
-    extra_splits: int = 0
+    extra_splits: int = 20
 
 
 @parameters
 class ScaffoldingResults:
     assembly_graph: HifiasmResultsWithExtraSplits
-    scaffolder: Literal["yahs", "custom", "bnp_scaffolding"]
+    scaffolder: Literal["yahs", "custom", "bnp_scaffolding", "true_scaffolder"] = "bnp_scaffolding"
+
+
+@result
+class ScaffolderAccuracy:
+    scaffolding_results: ScaffoldingResults
+
+
 
 @parameters
 class PhasingResults:
@@ -66,9 +74,12 @@ class PhasingResults:
 
 
 
+
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/read_simulation.smk", branch="master")
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/mason.smk", branch="master")
+#include: github("bioinf-benchmarking/mapping-benchmarking", "rules/plotting.smk", branch="master")
+include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/plotting.smk"
 include: "rules/hifi_simulation.smk"
 include: "rules/hic_simulation.smk"
 include: "rules/hic_mapping.smk"
@@ -79,7 +90,5 @@ include: "rules/bnp_scaffolding.smk"
 include: "rules/quast.smk"
 include: "rules/evaluation.smk"
 include: "rules/tests.smk"
-
-
 
 

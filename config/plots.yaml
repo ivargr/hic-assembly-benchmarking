@@ -1,0 +1,40 @@
+
+test_plots: [
+
+]
+
+# Default parameter groups. Will be used for plotting if not overridden in plot config in plots.yaml
+default_parameter_sets:
+  n_reads: [5000, 50000, 100000, 200000]
+  scaffolder: ["bnp_scaffolding", "yahs"]
+  extra_splits: [1, 5, 10, 20]
+
+# Axis/titles/etc that will be replaced in plots
+pretty_names:
+  ScaffolderAccuracy: Accuracy
+
+
+# Plots
+plots:
+  generic:
+    # used as a dummy for plots that are not defined
+    plot_type: ""
+  accuracy:
+    plot_type: accuracy
+    parameters:
+      individual: simulated
+      dataset_size: medium
+
+# The following defines different type of plots
+# This includes only the description of the structure of each plot, not what values are used for the variables
+# Each of x_axis, y_axis, category_variable, color, labels, facet_col, facet_row
+# should be either a result_type or a parameter_type if set
+
+plot_types:
+
+  accuracy:
+    type: line
+    x: n_reads
+    y: ScaffolderAccuracy
+    color: scaffolder
+    facet_col: extra_splits
