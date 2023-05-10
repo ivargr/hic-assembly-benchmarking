@@ -5,9 +5,10 @@ test_plots: [
 
 # Default parameter groups. Will be used for plotting if not overridden in plot config in plots.yaml
 default_parameter_sets:
-  n_reads: [5000, 50000, 100000, 200000, 400000]
+  n_reads: [5000, 50000, 100000]  # , 200000, 400000]
   scaffolder: ["bnp_scaffolding", "yahs"]
   extra_splits: [1, 5, 10, 20]
+
 
 # Axis/titles/etc that will be replaced in plots
 pretty_names:
@@ -26,11 +27,13 @@ plots:
       dataset_size: small
       n_reads: [1000, 5000]
       extra_splits: [5, 10]
+      source: not_assembled
   accuracy:
     plot_type: accuracy
     parameters:
       individual: simulated
       dataset_size: medium
+      source: not_assembled
 
 # The following defines different type of plots
 # This includes only the description of the structure of each plot, not what values are used for the variables

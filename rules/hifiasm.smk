@@ -34,7 +34,8 @@ rule get_hifiasm_haplotypes_as_fasta:
 
 rule introduce_extra_splits_to_hifiasm_results:
     input:
-        HifiasmResults.path() + "/hifiasm.hic.p_ctg.fa"
+        # can optinally just split the true haplotype sequence (or use assembled from hifi)
+        lambda wildcards: HifiasmResults.path() + "/hifiasm.hic.p_ctg.fa" if wildcards.source == "assembled_from_hifi" else ReferenceGenome.path(file_ending="") + "/haplotype0.fa"
     output:
         HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.fa"
     script:

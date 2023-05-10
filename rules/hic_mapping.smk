@@ -22,6 +22,7 @@ rule map_hic:
         "../envs/picard.yml"
     params:
         out_dir=lambda wildcards, input, output: output[0].replace(wildcards.assembly + ".bam", "")
+    threads: 100000
     shell:
         """
     arima_hic_mapping_pipeline/01_mapping_arima.sh {input.reads1} {input.reads2} {input.primary_assembly} {params.out_dir} {wildcards.assembly}

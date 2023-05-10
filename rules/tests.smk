@@ -47,7 +47,7 @@ rule test_edison:
 rule evaluate:
     input:
         [
-            ScaffoldingResults.from_flat_params(dataset_size="small",scaffolder=scaffolder, depth=10, n_reads=25000, extra_splits=20).file_path() + ".evaluation.txt"
+            ScaffoldingResults.from_flat_params(source="not_assembled", dataset_size="small", scaffolder=scaffolder, depth=10, n_reads=25000, extra_splits=20).file_path() + ".evaluation.txt"
             for scaffolder in ["yahs", "bnp_scaffolding", "true_scaffolder"]]
     output:
         touch("evaluate")
