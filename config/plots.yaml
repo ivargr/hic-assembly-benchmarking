@@ -5,7 +5,7 @@ test_plots: [
 
 # Default parameter groups. Will be used for plotting if not overridden in plot config in plots.yaml
 default_parameter_sets:
-  n_reads: [5000, 50000, 100000, 200000]
+  n_reads: [5000, 50000, 100000, 200000, 400000]
   scaffolder: ["bnp_scaffolding", "yahs"]
   extra_splits: [1, 5, 10, 20]
 
@@ -19,6 +19,13 @@ plots:
   generic:
     # used as a dummy for plots that are not defined
     plot_type: ""
+  test:
+    plot_type: accuracy
+    parameters:
+      individual: simulated
+      dataset_size: small
+      n_reads: [1000, 5000]
+      extra_splits: [5, 10]
   accuracy:
     plot_type: accuracy
     parameters:

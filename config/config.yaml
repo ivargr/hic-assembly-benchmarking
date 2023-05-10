@@ -38,7 +38,7 @@ genomes:
         #genome_size: 2623224
       big:
         chromosomes: "chrI,chrII,chrIII,chrIV,chrV"
-        
+
 
 
 mason_variator_parameters:
