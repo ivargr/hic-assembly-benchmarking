@@ -4,8 +4,8 @@ rule simulate_hic_for_haplotype:
     input:
         reference = ReferenceGenome.path(file_ending="") + "/haplotype{haplotype}.fa",
     output:
-        reads1 = HiCReads.path() + "/haplotype_{haplotype}_1.fq.gz",
-        reads2= HiCReads.path() + "/haplotype_{haplotype}_2.fq.gz",
+        reads1 = HiCReadsHaplotype.path() + "/1.fq.gz",
+        reads2= HiCReadsHaplotype.path() + "/2.fq.gz",
     conda:
         "../envs/sim3c.yml"
     params:
@@ -23,8 +23,8 @@ rule simulate_hic_for_haplotype:
 
 rule merge_hic_haplotype_reads:
     input:
-        haplotype0 = HiCReads.path() + "/haplotype_0_{pair}.fq.gz",
-        haplotype1 = HiCReads.path() + "/haplotype_1_{pair}.fq.gz",
+        haplotype0 = HiCReadsHaplotype.path(haplotype=0) + "/{pair}.fq.gz",
+        haplotype1 = HiCReadsHaplotype.path(haplotype=1) + "/{pair}.fq.gz",
     output:
         HiCReads.path() + "/reads{pair}.fq.gz",
     shell:

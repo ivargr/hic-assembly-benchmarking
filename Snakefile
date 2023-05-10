@@ -42,6 +42,12 @@ class HiCReads:
 
 
 @parameters
+class HiCReadsHaplotype:
+    reads: HiCReads
+    haplotype: Literal[0, 1] = 0
+
+
+@parameters
 class HifiasmResults:
     individual: Individual
     dataset_size: Literal["small", "medium", "big"] = "small"
