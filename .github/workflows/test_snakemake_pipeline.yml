@@ -16,11 +16,6 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install stuff
-        run: |
-            sudo apt-get update
-            #sudo apt-get -y install gcc
-
       - name: Run test
         uses: snakemake/snakemake-github-action@v1
         with:
@@ -31,7 +26,7 @@ jobs:
             apt-get update
             apt-get -y install gcc
             ./install_pbsim.sh
-            #pbsim
+            pbsim
             python -m pip install --upgrade pip setuptools wheel
             pip install -r requirements.txt
 
