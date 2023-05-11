@@ -32,7 +32,7 @@ rule run_whatshap:
 rule make_hic_heatmap_for_scaffolds:
     input:
         scaffolds = ScaffoldingResults.path() + "_scaffolds_final.fa",
-        hic_mapped_to_scaffolds = ScaffoldingResults.path() + "_scaffolds_final.bam",
+        hic_mapped_to_scaffolds = ScaffoldingResults.path() + "_scaffolds_final.sorted_by_read_name.bam",
     output:
         ScaffoldingResults.path() + "_scaffolds_final_heatmap.png"
     shell:

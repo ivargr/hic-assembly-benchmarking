@@ -26,6 +26,17 @@ rule merge_hic_haplotype_reads:
         haplotype0 = HiCReadsHaplotype.path(haplotype=0) + "/{pair}.fq.gz",
         haplotype1 = HiCReadsHaplotype.path(haplotype=1) + "/{pair}.fq.gz",
     output:
-        HiCReads.path() + "/reads{pair}.fq.gz",
+        HiCReads.path(individual="simulated") + "/reads{pair}.fq.gz",
     shell:
         "zcat {input} | gzip -c > {output}"
+
+
+rule download_real_hic_data:
+    output:
+        HiCReads.path(individual="real") + "/reads{pair}.fq.gz",
+    params:
+        url = lambda wildcards: config["genomes"][wildcards.genome_build]["real"]["hic_data"][int(wildcards.pair)-1],
+        n_lines = lambda wildcards: int(wildcards.n_reads) * 3,
+    shell:
+        #"wget {params.url} -O - | gunzip | head -n {params.n_lines} | gzip -c > {output}"
+        "curl -NL {params.url} 2>/dev/null | zcat | head -n {params.n_lines} | gzip -c > {output} || true"  # | gzip -c > {output}"

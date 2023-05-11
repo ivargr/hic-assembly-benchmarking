@@ -39,6 +39,18 @@ genomes:
       big:
         chromosomes: "chrI,chrII,chrIII,chrIV,chrV"
 
+    real:
+      simulated: True
+      hic_data:
+        - https://zenodo.org/record/5887339/files/SRR7126301_1.fastq.gz?download=1
+        - https://zenodo.org/record/5887339/files/SRR7126301_2.fastq.gz?download=1
+      small:
+        chromosomes: "chrI"
+      big:
+        chromosomes: "chrI,chrII,chrIII,chrIV,chrIX,chrV,chrVI,chrVII,chrVIII,chrX,chrXI,chrXII,chrXIII,chrXIV,chrXV,chrXVI,chrM"
+
+
+
 
 
 mason_variator_parameters:

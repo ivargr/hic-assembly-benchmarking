@@ -23,11 +23,19 @@ plots:
   test:
     plot_type: accuracy
     parameters:
-      individual: simulated
+      individual: real
       dataset_size: small
       n_reads: [5000, 20000, 40000]
       extra_splits: [5, 10, 20]
       source: not_assembled
+  real:
+    plot_type: accuracy
+    parameters:
+      individual: real
+      dataset_size: big
+      source: not_assembled
+      n_reads: [200000, 1000000]
+      extra_splits: [20, 100]
   accuracy:
     plot_type: accuracy
     parameters:
@@ -49,3 +57,4 @@ plot_types:
     y: ScaffolderAccuracy
     color: scaffolder
     facet_col: extra_splits
+

@@ -81,7 +81,6 @@ class PhasingResults:
 
 
 
-
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/read_simulation.smk", branch="master")
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/mason.smk", branch="master")
@@ -97,5 +96,6 @@ include: "rules/bnp_scaffolding.smk"
 include: "rules/quast.smk"
 include: "rules/evaluation.smk"
 include: "rules/tests.smk"
+include: "rules/real_data.smk"
 
 
