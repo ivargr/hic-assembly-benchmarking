@@ -7,7 +7,7 @@ test_plots: [
 default_parameter_sets:
   n_reads: [5000, 10000, 25000, 50000, 75000, 100000]
   scaffolder: ["bnp_scaffolding", "yahs"]
-  extra_splits: [5, 10, 20]
+  extra_splits: [5, 10, 25, 50]
 
 
 # Axis/titles/etc that will be replaced in plots
@@ -34,6 +34,7 @@ plots:
       individual: simulated
       dataset_size: medium
       source: not_assembled
+      n_reads: [50000, 100000]
 
 # The following defines different type of plots
 # This includes only the description of the structure of each plot, not what values are used for the variables

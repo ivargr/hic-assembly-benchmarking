@@ -59,9 +59,7 @@ rule run_edison:
         rm -f {params.edison_tmp_agp_file} &&
         echo {params.edison_tmp_agp_file} && 
         python edison/edit_distance.py -a {input.assembly} -r {input.true_reference} > {output} && 
-        cat {output}
-        # && gio open {params.edison_pdf_alignment}
-        
+        cat {output} && gio open {params.edison_pdf_alignment}
         """
 
 
@@ -69,7 +67,7 @@ rule run_edison:
 # heatmap, edison
 rule full_evaluation:
     input:
-        #ScaffoldingResults.path() + "_scaffolds_final_heatmap.png",
+        ScaffoldingResults.path() + "_scaffolds_final_heatmap.png",
         ScaffoldingResults.path() + ".edison.txt",
         ScaffoldingResults.path() + "_quast_report/report.pdf",
     output:
