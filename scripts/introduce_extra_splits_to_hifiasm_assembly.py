@@ -1,6 +1,8 @@
 import bionumpy as bnp
 import numpy as np
 import logging
+np.random.seed(1)
+
 logging.basicConfig(level=logging.INFO)
 
 extra_splits = int(snakemake.wildcards.extra_splits)
