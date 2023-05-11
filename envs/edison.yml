@@ -2,4 +2,8 @@ channels:
   - bioconda
 
 dependencies:
+  - python=3.9
   - mummer
+  - pip:
+      - matplotlib
+      - pandas
