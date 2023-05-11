@@ -23,8 +23,8 @@ rule simulate_hic_for_haplotype:
 
 rule merge_hic_haplotype_reads:
     input:
-        haplotype0 = HiCReadsHaplotype.path(haplotype=0) + "/{pair}.fq.gz",
-        haplotype1 = HiCReadsHaplotype.path(haplotype=1) + "/{pair}.fq.gz",
+        haplotype0 = HiCReadsHaplotype.path(individual="simulated", haplotype=0) + "/{pair}.fq.gz",
+        haplotype1 = HiCReadsHaplotype.path(individual="simulated", haplotype=1) + "/{pair}.fq.gz",
     output:
         HiCReads.path(individual="simulated") + "/reads{pair}.fq.gz",
     shell:
