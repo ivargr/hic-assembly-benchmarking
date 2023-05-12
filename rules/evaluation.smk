@@ -59,8 +59,9 @@ rule run_edison:
         rm -f {params.edison_tmp_agp_file} &&
         echo {params.edison_tmp_agp_file} && 
         python edison/edit_distance.py -a {input.assembly} -r {input.true_reference} > {output} && 
-        cat {output} && gio open {params.edison_pdf_alignment}
+        cat {output}
         """
+        #&& gio open {params.edison_pdf_alignment}
 
 
 

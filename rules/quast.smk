@@ -14,6 +14,5 @@ rule run_quast:
         "../envs/quast.yml"
     shell:
         """
-        quast {input.assembly} -r {input.true_reference} -o {params.quast_dir} && 
-        gio open {output.pdf}
+        quast {input.assembly} -r {input.true_reference} -o {params.quast_dir}
         """
