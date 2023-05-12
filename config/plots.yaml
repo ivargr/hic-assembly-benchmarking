@@ -23,7 +23,7 @@ plots:
   test:
     plot_type: accuracy
     parameters:
-      individual: real
+      individual: simulated
       dataset_size: small
       n_reads: [5000, 20000, 40000]
       extra_splits: [5, 10, 20]
