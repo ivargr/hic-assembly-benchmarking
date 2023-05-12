@@ -6,7 +6,7 @@ rule truth_scaffolder:
     input:
         true_reference= ReferenceGenome.path(file_ending="") + "/haplotype0.fa"
     output:
-        ScaffoldingResults.path(scaffolder="true_scaffolder") + "_scaffolds_final.fa"
+        ScaffoldingResults.path(scaffolder="true_scaffolder") + "/scaffolds.fa"
     shell:
         """
         cp {input} {output}
@@ -31,10 +31,10 @@ rule run_whatshap:
 
 rule make_hic_heatmap_for_scaffolds:
     input:
-        scaffolds = ScaffoldingResults.path() + "_scaffolds_final.fa",
-        hic_mapped_to_scaffolds = ScaffoldingResults.path() + "_scaffolds_final.sorted_by_read_name.bam",
+        scaffolds = ScaffoldingResults.path() + "/scaffolds.fa",
+        hic_mapped_to_scaffolds = ScaffoldingResults.path() + "/scaffolds.sorted_by_read_name.bam",
     output:
-        ScaffoldingResults.path() + "_scaffolds_final_heatmap.png"
+        ScaffoldingResults.path() + "/heatmap.png"
     shell:
         """
         bnp_assembly heatmap {input} {output}
@@ -43,10 +43,11 @@ rule make_hic_heatmap_for_scaffolds:
 
 rule run_edison:
     input:
-        assembly = ScaffoldingResults.path() + "_scaffolds_final.fa",
+        assembly = ScaffoldingResults.path() + "/scaffolds.fa",
         true_reference = ReferenceGenome.path(file_ending="") + "/haplotype0.fa"
     output:
-        ScaffoldingResults.path() + ".edison.txt"
+        txt_report = ScaffoldingResults.path() + "/edison.txt",
+        alignment_viz = ScaffoldingResults.path() + "/alignment.pdf",
     conda: "../envs/edison.yml"
     threads:
         10000000  # hack: cannot be run in parallel because of temporary files
@@ -58,27 +59,29 @@ rule run_edison:
         rm -f {output} &&
         rm -f {params.edison_tmp_agp_file} &&
         echo {params.edison_tmp_agp_file} && 
-        python edison/edit_distance.py -a {input.assembly} -r {input.true_reference} > {output} && 
-        cat {output} && gio open {params.edison_pdf_alignment}
+        python edison/edit_distance.py -a {input.assembly} -r {input.true_reference} > {output.txt_report} && 
+        mv {params.edison_pdf_alignment} {output.alignment_viz} &&
+        cat {output.txt_report}
         """
+        #&& gio open {params.edison_pdf_alignment}
 
 
 
 # heatmap, edison
 rule full_evaluation:
     input:
-        ScaffoldingResults.path() + "_scaffolds_final_heatmap.png",
-        ScaffoldingResults.path() + ".edison.txt",
-        ScaffoldingResults.path() + "_quast_report/report.pdf",
+        ScaffoldingResults.path() + "/heatmap.png",
+        ScaffoldingResults.path() + "/edison.txt",
+        ScaffoldingResults.path() + "/quast_report/report.pdf",
     output:
-        touch(ScaffoldingResults.path() + ".evaluation.txt")
+        touch(ScaffoldingResults.path() + "/evaluation.txt")
 
 
 
 
 rule accuracy:
     input:
-        edison_results = ScaffoldingResults.path() + ".edison.txt"
+        edison_results = ScaffoldingResults.path() + "/edison.txt"
     output:
         touch(ScaffolderAccuracy.path())
     run:

@@ -40,7 +40,7 @@ genomes:
         chromosomes: "chrI,chrII,chrIII,chrIV,chrV"
 
     real:
-      simulated: True
+      simulated: True # simply means that genomic variants are simulated. HiC-data can be real if specified with urls like below
       hic_data:
         - https://zenodo.org/record/5887339/files/SRR7126301_1.fastq.gz?download=1
         - https://zenodo.org/record/5887339/files/SRR7126301_2.fastq.gz?download=1
