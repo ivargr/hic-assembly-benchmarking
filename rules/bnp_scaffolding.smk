@@ -1,7 +1,4 @@
 
-
-
-
 rule run_bnp_scaffolding:
     input:
         contigs=HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.fa",
@@ -11,14 +8,5 @@ rule run_bnp_scaffolding:
         ScaffoldingResults.path(scaffolder="bnp_scaffolding") + "/scaffolds.fa"
     shell:
         """
-        
-        bnp_assembly scaffold {input.contigs} {input.hic_to_contig_mappings} {output}
+        bnp_assembly scaffold {input.contigs} {input.hic_to_contig_mappings} {output} --threshold 10
         """
-
-
-
-
-
-
-
-
