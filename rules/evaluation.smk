@@ -81,7 +81,7 @@ rule full_evaluation:
 
 rule accuracy:
     input:
-        edison_results = ScaffoldingResults.path() + ".edison.txt"
+        edison_results = ScaffoldingResults.path() + "/edison.txt"
     output:
         touch(ScaffolderAccuracy.path())
     run:
