@@ -1,3 +1,5 @@
+import os
+
 rule bwa_index:
     input:
         "{genome}.fa",
@@ -21,11 +23,14 @@ rule map_hic:
         #"../envs/hic_mapping.yml"
         "../envs/picard.yml"
     params:
-        out_dir=lambda wildcards, input, output: output[0].replace(wildcards.assembly + ".bam", "")
+        out_dir = lambda wildcards, input, output: os.path.sep.join(output[0].split(os.path.sep)[:-1]),  # replace(wildcards.assembly + ".bam", ""),
+        sra = lambda wildcards, input, output: output[0].split(os.path.sep)[-1].replace(".bam", "")  # lambda wildcards: wildcards.assembly.replace(os.path.sep, "_")
     threads: 100000
     shell:
         """
-    arima_hic_mapping_pipeline/01_mapping_arima.sh {input.reads1} {input.reads2} {input.primary_assembly} {params.out_dir} {wildcards.assembly}
+    echo {params.out_dir} && 
+    echo {params.sra} && 
+    arima_hic_mapping_pipeline/01_mapping_arima.sh {input.reads1} {input.reads2} {input.primary_assembly} {params.out_dir} {params.sra}
 	#bwa mem -t {config[n_threads]} -5SPM {input.primary_assembly} \
 	#{input.reads1} {input.reads2} \
 	#| samtools view -buS - | samtools sort -n -O bam - \

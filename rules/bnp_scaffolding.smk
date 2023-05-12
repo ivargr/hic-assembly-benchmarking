@@ -8,7 +8,7 @@ rule run_bnp_scaffolding:
         contigs_index=HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.fa.fai",
         hic_to_contig_mappings=HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.sorted_by_read_name.bam",
     output:
-        ScaffoldingResults.path(scaffolder="bnp_scaffolding") + "_scaffolds_final.fa"
+        ScaffoldingResults.path(scaffolder="bnp_scaffolding") + "/scaffolds.fa"
     shell:
         """
         
