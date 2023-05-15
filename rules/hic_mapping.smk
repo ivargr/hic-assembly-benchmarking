@@ -16,7 +16,7 @@ rule map_hic:
         reads1=HiCReads.path() + "/reads1.fq.gz",
         reads2=HiCReads.path() + "/reads2.fq.gz",
         primary_assembly=HifiasmResultsWithExtraSplits.path() + "/{assembly}.fa",
-        #bwa_index = multiext(HifiasmResultsWithExtraSplits.path() + "/{assembly}", ".fa.amb",".fa.ann",".fa.bwt",".fa.pac",".fa.sa")
+        bwa_index = multiext(HifiasmResultsWithExtraSplits.path() + "/{assembly}", ".fa.amb",".fa.ann",".fa.bwt",".fa.pac",".fa.sa")
     output:
         HifiasmResultsWithExtraSplits.path() + "/{assembly}.bam"
     conda:
