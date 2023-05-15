@@ -30,11 +30,11 @@ rule map_hic:
         """
     echo {params.out_dir} && 
     echo {params.sra} && 
-    #arima_hic_mapping_pipeline/01_mapping_arima.sh {input.reads1} {input.reads2} {input.primary_assembly} {params.out_dir} {params.sra}
-	bwa mem -t {config[n_threads]} -5SPM {input.primary_assembly} \
-	{input.reads1} {input.reads2} \
-	| samtools view -buS - | samtools sort -n -O bam - \
-	| samtools fixmate -mr - -| samtools sort -O bam - | samtools markdup -rsS - {output}
+    arima_hic_mapping_pipeline/01_mapping_arima.sh {input.reads1} {input.reads2} {input.primary_assembly} {params.out_dir} {params.sra}
+	#bwa mem -t {config[n_threads]} -5SPM {input.primary_assembly} \
+	#{input.reads1} {input.reads2} \
+	#| samtools view -buS - | samtools sort -n -O bam - \
+	#| samtools fixmate -mr - -| samtools sort -O bam - | samtools markdup -rsS - {output}
         #"""
 
 
