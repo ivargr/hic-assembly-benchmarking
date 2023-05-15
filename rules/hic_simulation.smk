@@ -14,11 +14,18 @@ rule simulate_hic_for_haplotype:
     shell:
         """
         rm -f {params.abundance_profile} && 
-        sim3C --seed 123 --dist uniform -n {wildcards.n_reads} -l 150 -e NlaIII --insert-mean 1000 -m hic {input.reference} {params.tmp_output} && 
+        sim3C --prefix haplotype{wildcards.haplotype} \
+        --create-cids \
+        --seed 123 \
+        --dist lognormal \
+        -n {wildcards.n_reads} \
+        -l 150 -e NlaIII \
+        --insert-mean 1200 \
+        --insert-sd 1000 \
+        -m hic {input.reference} {params.tmp_output} && 
         seqtk seq -1 {params.tmp_output} | gzip -c > {output.reads1} && 
         seqtk seq -2 {params.tmp_output} | gzip -c > {output.reads2} 
         """
-
 
 
 rule merge_hic_haplotype_reads:
