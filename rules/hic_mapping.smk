@@ -27,15 +27,18 @@ rule map_hic:
         sra = lambda wildcards, input, output: output[0].split(os.path.sep)[-1].replace(".bam", "")  # lambda wildcards: wildcards.assembly.replace(os.path.sep, "_")
     threads: 100000
     shell:
+    # samtools view -f 1 is important to discard reads that are not properly paired
         """
-    echo {params.out_dir} && 
-    echo {params.sra} && 
     #arima_hic_mapping_pipeline/01_mapping_arima.sh {input.reads1} {input.reads2} {input.primary_assembly} {params.out_dir} {params.sra}
 	bwa mem -t {config[n_threads]} -5SPM {input.primary_assembly} \
 	{input.reads1} {input.reads2} \
 	| samtools view -buS - | samtools sort -n -O bam - \
-	| samtools fixmate -mr - -| samtools sort -O bam - | samtools markdup -rsS - {output}
-        #"""
+	| samtools fixmate -mr - -| \
+	samtools sort -O bam - | \
+	samtools markdup -rsS - - | \
+	samtools view -f 1 -O bam - > \
+	{output}
+    #"""
 
 
 

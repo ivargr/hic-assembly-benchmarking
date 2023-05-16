@@ -33,11 +33,12 @@ rule make_hic_heatmap_for_scaffolds:
     input:
         scaffolds = ScaffoldingResults.path() + "/scaffolds.fa",
         hic_mapped_to_scaffolds = ScaffoldingResults.path() + "/scaffolds.sorted_by_read_name.bam",
+        _ = ScaffoldingResults.path() + "/scaffolds.fa.fai",
     output:
         ScaffoldingResults.path() + "/heatmap.png"
     shell:
         """
-        bnp_assembly heatmap {input} {output}
+        bnp_assembly heatmap {input.scaffolds} {input.hic_mapped_to_scaffolds} {output}
         """
 
 
