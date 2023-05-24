@@ -1,31 +1,16 @@
+import os
 
 
-rule simulate_hic_for_haplotype:
+rule naive_hic_simulation:
     input:
-        reference = ReferenceGenome.path(file_ending="") + "/haplotype{haplotype}.fa",
+        reference=ReferenceGenome.path(file_ending="") + "/haplotype{haplotype}.fa",
     output:
         reads1 = HiCReadsHaplotype.path() + "/1.fq.gz",
-        reads2= HiCReadsHaplotype.path() + "/2.fq.gz",
-    conda:
-        "../envs/sim3c.yml"
+        reads2=HiCReadsHaplotype.path() + "/2.fq.gz",
     params:
-        abundance_profile = lambda wildcards, input, output: "/".join(output.reads1.split("/")[:-1]) + "/profile.tsv",
-        tmp_output = lambda wildcards, input, output: output.reads1.replace(".fq.gz", ".tmp")
+        output_base_name = lambda wildcards, input, output: os.path.sep.join(output.reads1.split(os.path.sep)[:-1]) + "/",
     shell:
-        """
-        rm -f {params.abundance_profile} && 
-        sim3C --prefix haplotype{wildcards.haplotype} \
-        --create-cids \
-        --seed 123 \
-        --dist lognormal \
-        -n {wildcards.n_reads} \
-        -l 150 -e NlaIII \
-        --insert-mean 1200 \
-        --insert-sd 1000 \
-        -m hic {input.reference} {params.tmp_output} && 
-        seqtk seq -1 {params.tmp_output} | gzip -c > {output.reads1} && 
-        seqtk seq -2 {params.tmp_output} | gzip -c > {output.reads2} 
-        """
+        "python3 /home/ivargry/dev/bnp_assembly/bnp_assembly/simulation/hic_read_simulation.py {input.reference} {wildcards.n_reads} 150 10000 0.8 {params.output_base_name} reads_haplotype{wildcards.haplotype}_"
 
 
 rule merge_hic_haplotype_reads:

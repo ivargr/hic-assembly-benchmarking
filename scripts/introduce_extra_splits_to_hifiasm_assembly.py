@@ -20,7 +20,7 @@ total_size = np.sum(contigs.sequence.shape[1])
 weights = contigs.sequence.shape[1]/total_size
 logging.info(f"Using weights {weights}")
 splits_at_contig = np.bincount(np.sort(
-    np.random.choice(np.arange(len(contigs)), extra_splits, p=weights)))
+    np.random.choice(np.arange(len(contigs)), extra_splits, p=weights)), minlength=len(contigs))
 
 logging.info(f"Will split contigs n times: {splits_at_contig}")
 
@@ -33,7 +33,7 @@ def random_spaced_locations(start, stop, n, min_space=1000):
     return candidates[0:n]
 
 
-min_contig_size = 8000
+min_contig_size = 15000
 
 for contig_id, n_splits in enumerate(splits_at_contig):
     if n_splits == 0:
@@ -44,7 +44,8 @@ for contig_id, n_splits in enumerate(splits_at_contig):
 
     # make n_splits new contigs (between the splits)
     old_contig_sequence = contigs.sequence[contig_id]
-    split_positions = np.sort(random_spaced_locations(min_contig_size, len(old_contig_sequence)-min_contig_size, n_splits, min_space=min_contig_size))
+    split_positions = np.sort(random_spaced_locations(min_contig_size, len(old_contig_sequence)-min_contig_size,
+                                                      n_splits, min_space=min_contig_size))
     split_positions = np.insert(split_positions, 0, 0)
     split_positions = np.append(split_positions, len(old_contig_sequence))
     print(split_positions)

@@ -6,4 +6,4 @@ dependencies:
   - python=2.7
   - pip
   - pip:
-      - git+https://github.com/cerebis/sim3C
+      - git+https://github.com/ivargr/sim3C

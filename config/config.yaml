@@ -49,7 +49,15 @@ genomes:
       big:
         chromosomes: "chrI,chrII,chrIII,chrIV,chrIX,chrV,chrVI,chrVII,chrVIII,chrX,chrXI,chrXII,chrXIII,chrXIV,chrXV,chrXVI,chrM"
 
+  # simulated genome sequence
+  simulated1:
+    genome_size: 10000000
+    n_chromosomes: 10
 
+    simulated:
+      simulated: True
+      small:
+        chromosomes: "chr1,chr2,chr3"
 
 
 
