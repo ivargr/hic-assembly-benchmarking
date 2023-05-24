@@ -83,8 +83,8 @@ class PhasingResults:
 
 
 
-#include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")
-include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/reference_genome.smk"
+include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")
+#include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/reference_genome.smk"
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/read_simulation.smk", branch="master")
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/mason.smk", branch="master")
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/plotting.smk", branch="master")
