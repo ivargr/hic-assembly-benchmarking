@@ -82,7 +82,6 @@ class PhasingResults:
     phaser: Literal["gfase"]
 
 
-
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")
 #include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/reference_genome.smk"
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/read_simulation.smk", branch="master")
