@@ -29,7 +29,9 @@ def random_spaced_locations(start, stop, n, min_space=1000):
     assert stop > min_space
     min_space = min(min_space, stop-start-1)
     candidates = np.arange(start, stop, min_space)
-    assert len(candidates) >= n
+    if len(candidates) < n:
+        logging.warning(f"Did not manage to make {n} splits between {start} and "
+                        f"{stop} with spacing {min_space}. Made {len(candidates)}")
     np.random.shuffle(candidates)
     return candidates[0:n]
 
