@@ -27,6 +27,7 @@ logging.info(f"Will split contigs n times: {splits_at_contig}")
 
 def random_spaced_locations(start, stop, n, min_space=1000):
     assert stop > min_space
+    min_space = min(min_space, stop-start-1)
     candidates = np.arange(start, stop, min_space)
     assert len(candidates) >= n
     np.random.shuffle(candidates)
