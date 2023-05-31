@@ -1,3 +1,5 @@
+import pickle
+
 import bionumpy as bnp
 import numpy as np
 import logging
@@ -38,6 +40,11 @@ def random_spaced_locations(start, stop, n, min_space=1000):
 
 min_contig_size = 15000
 
+inter_chromsome_splits = []
+intra_chromosome_splits = []
+
+
+prev_contig_name = None
 for contig_id, n_splits in enumerate(splits_at_contig):
     if n_splits == 0:
         new_contig_names.append(f"contig{new_contig_id}")
@@ -53,11 +60,21 @@ for contig_id, n_splits in enumerate(splits_at_contig):
     split_positions = np.append(split_positions, len(old_contig_sequence))
     print(split_positions)
     logging.info(f"Splitting contig {contig_id} between {split_positions}")
-    for start, end in zip(split_positions[0:-1], split_positions[1:]):
+    for split_i, (start, end) in enumerate(zip(split_positions[0:-1], split_positions[1:])):
         logging.info(f"New contig at old contig {contig_id} between {start} and {end}")
-        new_contig_names.append(f"contig{new_contig_id}")
+        contig_name = f"contig{new_contig_id}"
+        new_contig_names.append(contig_name)
         new_contig_sequences.append(contigs.sequence[contig_id][start:end])
         new_contig_id += 1
+
+        if split_i == 0:
+            if prev_contig_name is not None:
+                inter_chromsome_splits.append((prev_contig_name, contig_name))
+        else:
+            intra_chromosome_splits.append((prev_contig_name, contig_name))
+
+        prev_contig_name = contig_name
+
 
 new_fasta = bnp.datatypes.SequenceEntry.from_entry_tuples(
     zip(new_contig_names, new_contig_sequences)
@@ -66,3 +83,7 @@ logging.info(f"Ended up with {len(new_fasta)} contigs")
 
 with bnp.open(snakemake.output[0], "w") as f:
     f.write(new_fasta)
+
+with open(snakemake.output[1], "wb") as f:
+    pickle.dump({"inter_chromsome_splits": inter_chromsome_splits,
+                "intra_chromosome_splits": intra_chromosome_splits}, f)
