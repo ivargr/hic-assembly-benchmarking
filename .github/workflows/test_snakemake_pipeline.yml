@@ -23,10 +23,10 @@ jobs:
           snakefile: 'Snakefile'
           args: '-F --cores 1 --use-conda plots/test.png'
           stagein: |
-            apt-get update
-            apt-get -y install gcc
-            ./install_pbsim.sh
-            pbsim
+            #apt-get update
+            #apt-get -y install gcc
+            #./install_pbsim.sh
+            #pbsim
             python -m pip install --upgrade pip setuptools wheel
             pip install -r requirements.txt
 

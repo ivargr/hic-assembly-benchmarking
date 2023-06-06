@@ -10,7 +10,7 @@ extra_splits = int(snakemake.wildcards.extra_splits)
 contigs = bnp.open(snakemake.input[0]).read()
 
 simulated = simulate_contigs_from_genome(contigs, extra_splits, rng=rng)
-new_fasta = simulated.genome
+new_fasta = simulated.contigs
 
 
 with bnp.open(snakemake.output[0], "w") as f:
@@ -18,5 +18,5 @@ with bnp.open(snakemake.output[0], "w") as f:
 
 
 with open(snakemake.output[1], "wb") as f:
-    pickle.dump({"inter_chromsome_splits": simulated.inter_chromsome_splits,
+    pickle.dump({"inter_chromsome_splits": simulated.inter_chromosome_splits,
                 "intra_chromosome_splits": simulated.intra_chromosome_splits}, f)
