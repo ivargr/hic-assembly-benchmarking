@@ -106,6 +106,6 @@ rule accuracy_bnp:
         results = ScaffoldingResults.path() + "/accuracy.txt"
     shell:
         """
-        bnp_assembly evaluate_agp {input.scaffold_agp} {input.true_agp} > {output.results}
+        bnp_assembly evaluate-agp {input.scaffold_agp} {input.true_agp} > {output.results} && cat {output.results}
         """
 
