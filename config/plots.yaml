@@ -28,6 +28,9 @@ plots:
       n_reads: [5000, 20000, 40000]
       extra_splits: [5, 10, 20]
       source: not_assembled  # Not assembled means that hifiasm is not run. Instead, the true genome is artificially split into contigs
+  edge_recall:
+    plot_type: edge_recall
+
   yeast_real_data:
     plot_type: accuracy
     parameters:
@@ -57,4 +60,10 @@ plot_types:
     y: ScaffolderAccuracy
     color: scaffolder
     facet_col: extra_splits
+
+  edge_recall:
+    type: line
+    x: extra_splits
+    y: ScaffolderEdgeRecall
+    color: scaffolder
 
