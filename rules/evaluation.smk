@@ -95,3 +95,17 @@ rule accuracy:
 
         with open(output[0], "w") as f:
             f.write(str(accuracy) + "\n")
+
+
+
+rule accuracy_bnp:
+    input:
+        scaffold_agp = ScaffoldingResults.path(scaffolder="bnp_scaffolding") + "/scaffolds.agp",
+        true_agp = HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.agp",
+    output:
+        results = ScaffoldingResults.path() + "/accuracy.txt"
+    shell:
+        """
+        bnp_assembly evaluate-agp {input.scaffold_agp} {input.true_agp} > {output.results} && cat {output.results}
+        """
+
