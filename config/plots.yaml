@@ -34,6 +34,14 @@ plots:
       individual: simulated
       dataset_size: small
       n_reads: 40000
+  edge_recall_real:
+    plot_type: edge_recall
+    parameters:
+      genome_build: sacCer3
+      individual: real
+      dataset_size: medium
+      n_reads: [100000, 200000, 400000, 700000, 1000000, 1500000]
+      extra_splits: [20, 50]
   yeast_real_data:
     plot_type: accuracy
     parameters:
@@ -66,7 +74,8 @@ plot_types:
 
   edge_recall:
     type: line
-    x: extra_splits
+    x: n_reads
     y: ScaffolderEdgeRecall
     color: scaffolder
+    facet_col: extra_splits
 
