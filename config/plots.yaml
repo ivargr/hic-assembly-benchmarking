@@ -6,7 +6,7 @@ test_plots: [
 # Default parameter groups. Will be used for plotting if not overridden in plot config in plots.yaml
 default_parameter_sets:
   n_reads: [5000, 10000, 25000, 50000, 75000, 100000]
-  scaffolder: ["bnp_scaffolding", "yahs"]
+  scaffolder: ["bnp_scaffolding", "bnp_scaffolding_nosplit", "yahs"]
   extra_splits: [5, 10, 25, 50]
 
 

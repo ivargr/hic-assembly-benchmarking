@@ -5,14 +5,15 @@ rule run_yahs:
         contigs_index=HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.fa.fai",
         hic_to_contig_mappings=HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.sorted_by_read_name.bam",
     output:
-        ScaffoldingResults.path(scaffolder="yahs") + "/scaffolds.fa"
+        scaffolds = ScaffoldingResults.path(scaffolder="yahs") + "/scaffolds.fa",
+        agp = ScaffoldingResults.path(scaffolder="yahs") + "/scaffolds.agp",
     conda:
         "../envs/yahs.yml"
     params:
         out_prefix = lambda wildcards, input, output: output[0].replace("_scaffolds_final.fa", "")
     shell:
-        """
-        yahs -r 250,500,1000,5000,10000,20000,40000,50000 -o {params.out_prefix} {input.contigs} {input.hic_to_contig_mappings} && mv {params.out_prefix}_scaffolds_final.fa {output}
-        """
+        "yahs -r 250,500,1000,5000,10000,20000,40000,50000 -o {params.out_prefix} {input.contigs} {input.hic_to_contig_mappings} && "
+        "mv {params.out_prefix}_scaffolds_final.fa {output.scaffolds} && "
+        "mv {params.out_prefix}_scaffolds_final.agp {output.agp} "
 
 
