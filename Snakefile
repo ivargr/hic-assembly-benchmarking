@@ -75,6 +75,10 @@ class ScaffolderAccuracy:
     scaffolding_results: ScaffoldingResults
 
 
+@result
+class ScaffolderEdgeRecall:
+    scaffolding_results: ScaffoldingResults
+
 
 @parameters
 class PhasingResults:

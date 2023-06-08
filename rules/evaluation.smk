@@ -87,7 +87,7 @@ rule accuracy:
     input:
         edison_results = ScaffoldingResults.path() + "/edison.txt"
     output:
-        touch(ScaffolderAccuracy.path())
+        ScaffolderAccuracy.path()
     run:
         with open(input[0]) as f:
             line = [l for l in f if "Accuracy:" in l][0]
@@ -106,6 +106,22 @@ rule accuracy_bnp:
         results = ScaffoldingResults.path() + "/accuracy.txt"
     shell:
         """
-        bnp_assembly evaluate-agp {input.scaffold_agp} {input.true_agp} > {output.results} && cat {output.results}
+        bnp_assembly evaluate-agp {input.scaffold_agp} {input.true_agp} {output.results} && cat {output.results}
         """
+
+
+
+rule edge_recall:
+    input:
+        results = ScaffoldingResults.path() + "/accuracy.txt"
+    output:
+        ScaffolderEdgeRecall.path()
+    run:
+        with open(input[0]) as f:
+            line = [l for l in f if "edge_recall:" in l][0]
+            accuracy = float(line.split("")[1])
+
+        with open(output[0],"w") as f:
+            f.write(str(accuracy) + "\n")
+
 
