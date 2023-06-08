@@ -100,7 +100,7 @@ rule accuracy:
 
 rule accuracy_bnp:
     input:
-        scaffold_agp = ScaffoldingResults.path(scaffolder="bnp_scaffolding") + "/scaffolds.agp",
+        scaffold_agp = ScaffoldingResults.path() + "/scaffolds.agp",
         true_agp = HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.agp",
     output:
         results = ScaffoldingResults.path() + "/accuracy.txt"

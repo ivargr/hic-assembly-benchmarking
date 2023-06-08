@@ -67,7 +67,7 @@ class HifiasmResultsWithExtraSplits:
 @parameters
 class ScaffoldingResults:
     assembly_graph: HifiasmResultsWithExtraSplits
-    scaffolder: Literal["yahs", "salsa2", "custom", "bnp_scaffolding", "true_scaffolder"] = "bnp_scaffolding"
+    scaffolder: Literal["yahs", "salsa2", "custom", "bnp_scaffolding_nosplit", "bnp_scaffolding", "true_scaffolder"] = "bnp_scaffolding"
 
 
 @result
@@ -100,5 +100,3 @@ include: "rules/evaluation.smk"
 include: "rules/tests.smk"
 include: "rules/real_data.smk"
 include: "rules/salsa2.smk"
-
-
