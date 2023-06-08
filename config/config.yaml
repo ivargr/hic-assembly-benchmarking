@@ -46,12 +46,24 @@ genomes:
         - https://zenodo.org/record/5887339/files/SRR7126301_2.fastq.gz?download=1
       small:
         chromosomes: "chrI"
+      medium:
+        chromosomes: "chrI,chrII,chrIII,chrIV,chrV"
       big:
         chromosomes: "chrI,chrII,chrIII,chrIV,chrIX,chrV,chrVI,chrVII,chrVIII,chrX,chrXI,chrXII,chrXIII,chrXIV,chrXV,chrXVI,chrM"
 
   # simulated genome sequence
   simulated1:
     genome_size: 10000000
+    n_chromosomes: 11
+
+    simulated:
+      simulated: True
+      small:
+        chromosomes: "chr1,chr2,chr3"
+      medium:
+        chromosomes: "chr0,chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9"
+  simulated2:
+    genome_size: 1000000
     n_chromosomes: 10
 
     simulated:

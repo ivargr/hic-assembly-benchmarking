@@ -68,6 +68,19 @@ rule test_gfase:
         touch("test_gfase")
 
 
+rule small_test:
+    input:
+        ScaffolderAccuracy.from_flat_params(source="not_assembled", dataset_size="small", scaffolder='bnp_scaffolding', n_reads=40000, extra_splits=10, genome_build='simulated1').file_path()
+    output:
+        touch("small_test")
+
+rule medium_test:
+    input:
+        ScaffolderAccuracy.from_flat_params(source="not_assembled", dataset_size="big", scaffolder='bnp_scaffolding', n_reads=100000, extra_splits=10, genome_build='sacCer3').file_path()
+    output:
+        touch("small_test")
+
+
 rule test_accuracy:
     input:
         ScaffolderAccuracy.from_flat_params().file_path()
