@@ -60,7 +60,7 @@ class HifiasmResults:
 @parameters
 class HifiasmResultsWithExtraSplits:
     hifiasm_results: HifiasmResults
-    source: Literal["assembled_from_hifi", "not_assembled"] = "assembled_from_hifi"
+    source: Literal["assembled_from_hifi", "not_assembled"] = "not_assembled"
     extra_splits: int = 20
 
 
