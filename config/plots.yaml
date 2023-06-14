@@ -8,6 +8,7 @@ default_parameter_sets:
   n_reads: [5000, 10000, 25000, 50000, 75000, 100000]
   scaffolder: ["bnp_scaffolding", "bnp_scaffolding_nosplit", "yahs"]
   extra_splits: [5, 10, 25, 50]
+  seed: [1, 10, 20 , 30]
 
 
 # Axis/titles/etc that will be replaced in plots
@@ -40,8 +41,18 @@ plots:
       genome_build: sacCer3
       individual: real
       dataset_size: big
-      n_reads: [100000, 200000, 400000, 700000, 1000000, 1500000, 3000000]
+      n_reads: [100000, 600000, 1000000]
       extra_splits: [20, 50]
+  edge_recall_real_multiple_seeds:
+    plot_type: edge_recall_real_multiple_seeds
+    parameters:
+      genome_build: sacCer3
+      individual: real
+      dataset_size: big
+      n_reads: [ 100000, 1000000, 2000000]
+      extra_splits: 50
+      seed: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+      scaffolder: [bnp_scaffolding_nosplit, yahs]
   yeast_real_data:
     plot_type: accuracy
     parameters:
@@ -79,3 +90,9 @@ plot_types:
     color: scaffolder
     facet_col: extra_splits
 
+  edge_recall_real_multiple_seeds:
+    type: line
+    x: n_reads
+    y: ScaffolderEdgeRecall
+    color: seed
+    facet_col: scaffolder

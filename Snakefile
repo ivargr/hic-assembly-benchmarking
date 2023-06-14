@@ -36,11 +36,16 @@ class HifiReads:
 
 
 @parameters
-class HiCReads:
+class RawRealHicReads:
     individual: Individual
     dataset_size: Literal["small", "medium", "big"] = "small"
     hic: Literal["hic"] = "hic"
-    n_reads: int = 100
+    n_reads: int = 1000
+
+@parameters
+class HiCReads:
+    reads: RawRealHicReads
+    seed: int = 123
 
 
 @parameters
@@ -55,6 +60,7 @@ class HifiasmResults:
     dataset_size: Literal["small", "medium", "big"] = "small"
     depth: float = 10
     n_reads: int = 500
+    seed: int = 123
 
 
 @parameters
