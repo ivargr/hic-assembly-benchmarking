@@ -39,8 +39,8 @@ plots:
     parameters:
       genome_build: sacCer3
       individual: real
-      dataset_size: medium
-      n_reads: [100000, 200000, 400000, 700000, 1000000, 1500000]
+      dataset_size: big
+      n_reads: [100000, 200000, 400000, 700000, 1000000, 1500000, 3000000]
       extra_splits: [20, 50]
   yeast_real_data:
     plot_type: accuracy
