@@ -1,4 +1,5 @@
 import os
+from collections import Counter, defaultdict
 
 
 # A scaffolder giving correct results
@@ -103,12 +104,12 @@ rule accuracy_bnp:
         scaffold_agp = ScaffoldingResults.path() + "/scaffolds.agp",
         true_agp = HifiasmResultsWithExtraSplits.path() + "/hifiasm.hic.p_ctg.agp",
     output:
-        results = ScaffoldingResults.path() + "/accuracy.txt"
+        results = ScaffoldingResults.path() + "/accuracy.txt",
+        missing_edges = ScaffoldingResults.path() + "/accuracy.txt.missing_edges",
     shell:
         """
         bnp_assembly evaluate-agp {input.scaffold_agp} {input.true_agp} {output.results} && cat {output.results}
         """
-
 
 
 rule edge_recall:
@@ -125,4 +126,40 @@ rule edge_recall:
         with open(output[0],"w") as f:
             f.write(str(accuracy) + "\n")
 
+
+rule missing_edges:
+    input:
+        results=ScaffoldingResults.path() + "/accuracy.txt.missing_edges"
+    output:
+        ScaffolderMissingEdges.path()
+    shell:
+        "cp {input} {output}"
+
+
+rule common_missing_edges:
+    input:
+        get_plot_input_files
+    output:
+        "plots/{plot_name}.missing_edges.txt"
+    run:
+        # Find common missing edges in all inputs
+        counts = Counter()
+        edge_to_file = defaultdict(list)
+
+        for f in input:
+            with open(f) as f:
+                for line in f:
+                    edge = line.strip()
+                    counts[edge] += 1
+                    edge_to_file[edge].append(f.name)
+
+        print(counts)
+        with open(output[0], "w") as f:
+            for k, v in counts.items():
+                f.write(f"{k}:{v}\n")
+                print(f"{k}: {v}")
+                if v >= 2:
+                    print("\t" + "\n\t".join(edge_to_file[k]))
+
+        print(edge_to_file)
 

@@ -86,6 +86,11 @@ class ScaffolderEdgeRecall:
     scaffolding_results: ScaffoldingResults
 
 
+@result
+class ScaffolderMissingEdges:
+    scaffolding_results: ScaffoldingResults
+
+
 @parameters
 class PhasingResults:
     assembly_graph: HifiasmResultsWithExtraSplits

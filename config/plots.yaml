@@ -50,9 +50,19 @@ plots:
       individual: real
       dataset_size: big
       n_reads: [ 100000, 1000000, 2000000]
-      extra_splits: 50
-      seed: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+      extra_splits: [10, 50]
+      seed: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160]
       scaffolder: [bnp_scaffolding_nosplit, yahs]
+  missing_edges:
+    plot_type: missing_edges
+    parameters:
+      genome_build: sacCer3
+      individual: real
+      dataset_size: big
+      n_reads: [ 1000000 ]
+      extra_splits: 50
+      seed: [ 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160 ]
+      scaffolder: [ bnp_scaffolding_nosplit ]
   yeast_real_data:
     plot_type: accuracy
     parameters:
@@ -90,8 +100,15 @@ plot_types:
     color: scaffolder
     facet_col: extra_splits
 
+  missing_edges:
+    type: violin
+    x: n_reads
+    y: ScaffolderMissingEdges
+    color: scaffolder
+
   edge_recall_real_multiple_seeds:
-    type: box
+    type: violin
     x: n_reads
     y: ScaffolderEdgeRecall
     color: scaffolder
+    facet_col: extra_splits
