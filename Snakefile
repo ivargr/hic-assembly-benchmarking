@@ -87,6 +87,10 @@ class ScaffolderEdgeRecall:
 
 
 @result
+class ScaffolderEdgePrecision:
+    scaffolding_results: ScaffoldingResults
+
+@result
 class ScaffolderMissingEdges:
     scaffolding_results: ScaffoldingResults
 

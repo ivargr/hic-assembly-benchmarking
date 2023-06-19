@@ -127,6 +127,21 @@ rule edge_recall:
             f.write(str(accuracy) + "\n")
 
 
+rule edge_precision:
+    input:
+        results = ScaffoldingResults.path() + "/accuracy.txt"
+    output:
+        ScaffolderEdgePrecision.path()
+    run:
+        with open(input[0]) as f:
+            line = [l for l in f if "edge_precision" in l][0]
+            print(line)
+            accuracy = float(line.split()[1])
+
+        with open(output[0],"w") as f:
+            f.write(str(accuracy) + "\n")
+
+
 rule missing_edges:
     input:
         results=ScaffoldingResults.path() + "/accuracy.txt.missing_edges"
