@@ -103,8 +103,11 @@ class PhasingResults:
 
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/reference_genome.smk", branch="master")
 #include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/reference_genome.smk"
+#include: github("bioinf-benchmarking/mapping-benchmarking", "rules/read_simulation.smk", branch="master")
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/read_simulation.smk", branch="master")
+#include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/read_simulation.smk"
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/mason.smk", branch="master")
+#include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/mason.smk"
 include: github("bioinf-benchmarking/mapping-benchmarking", "rules/plotting.smk", branch="master")
 #include: "/home/ivargry/dev/sync/mapping-benchmarking/rules/plotting.smk"
 include: "rules/hifi_simulation.smk"
@@ -119,3 +122,26 @@ include: "rules/evaluation.smk"
 include: "rules/tests.smk"
 include: "rules/real_data.smk"
 include: "rules/salsa2.smk"
+
+ruleorder: download_athalia_rosea_reference > convert_reference_genome_to_fasta
+
+
+rule download_athalia_rosea_reference_tmp:
+    output:
+        protected("data/athalia_rosea/reference.fa.tmp")
+    shell:
+        """
+        wget -O {output}.tmp https://www.ebi.ac.uk/ena/browser/api/fasta/GCA_917208135.1?download=true&gzip=true && \
+        """
+
+        
+rule download_athalia_rosea_reference:
+    input:
+        "data/athalia_rosea/reference.fa.tmp"
+    output:
+        "data/athalia_rosea/reference.fa"
+    shell:
+        """
+        python scripts/rename_athalia_rosea_contigs.py {input} > {output}
+        """
+
