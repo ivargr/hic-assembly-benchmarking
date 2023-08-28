@@ -9,7 +9,7 @@ rng = np.random.default_rng(1)
 extra_splits = int(snakemake.wildcards.extra_splits)
 contigs = bnp.open(snakemake.input[0]).read()
 
-simulated = simulate_contigs_from_genome(contigs, extra_splits, rng=rng)
+simulated = simulate_contigs_from_genome(contigs, extra_splits, rng=rng, also_split_at_ns=int(snakemake.wildcards.splits_on_n_ns))
 new_fasta = simulated.contigs
 agp = simulated.alignment
 

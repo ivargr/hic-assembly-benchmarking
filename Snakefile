@@ -68,7 +68,7 @@ class HifiasmResultsWithExtraSplits:
     hifiasm_results: HifiasmResults
     source: Literal["assembled_from_hifi", "not_assembled"] = "not_assembled"
     extra_splits: int = 20
-
+    splits_on_n_ns: int = 0
 
 @parameters
 class ScaffoldingResults:
