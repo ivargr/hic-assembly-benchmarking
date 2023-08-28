@@ -76,6 +76,18 @@ plots:
       seed: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
 
 
+  accuracy_real_violin:
+    plot_type: accuracy_multiple_seeds
+    parameters:
+      genome_build: sacCer3
+      individual: real
+      dataset_size: big
+      n_reads: 1000000
+      extra_splits: 50
+      scaffolder: [bnp_scaffolding, yahs]
+      seed: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+
+
   yeast_real_data:
     plot_type: accuracy
     parameters:
@@ -132,3 +144,8 @@ plot_types:
     y: ScaffolderEdgePrecision
     color: scaffolder
     facet_col: extra_splits
+
+  accuracy_multiple_seeds:
+    type: violin
+    x: scaffolder
+    y: ScaffolderAccuracy
