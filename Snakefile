@@ -131,7 +131,7 @@ rule download_athalia_rosea_reference_tmp:
         protected("data/athalia_rosea/reference.fa.tmp")
     shell:
         """
-        wget -O {output}.tmp https://www.ebi.ac.uk/ena/browser/api/fasta/GCA_917208135.1?download=true&gzip=true && \
+        wget -O {output} https://www.ebi.ac.uk/ena/browser/api/fasta/GCA_917208135.1?download=true&gzip=true
         """
 
         
